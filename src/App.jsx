@@ -3,17 +3,18 @@ import {
   Phone, Mail, MapPin, Search, ArrowRight, CheckCircle2, 
   Send, ExternalLink, ShieldCheck, Truck, Award,
   X, MessageSquare, Layers, Building2, ShoppingCart, Menu as MenuIcon,
-  Plus, Minus, Trash2, ShoppingBag, Eye, ArrowLeft, Check, Star, Heart
+  Plus, Minus, Trash2, ShoppingBag, Eye, ArrowLeft, Check, Star, Heart,
+  User, UserCheck, Package, Clock, HelpCircle, ChevronRight
 } from 'lucide-react';
-import { categories, products } from './data/products';
+import { categories, products, categoryBanners } from './data/products';
 import logoImg from './images/image.png';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('home'); // 'home', 'shop', 'categories', 'about', 'contact'
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');
-  const [modalType, setModalType] = useState(null); // 'partner', 'quote', 'contact', 'checkout', null
+  const [modalType, setModalType] = useState(null); // 'account', 'quote', 'contact', 'checkout', null
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -23,7 +24,7 @@ export default function App() {
   // Cart & Product Detail state
   const [cart, setCart] = useState(() => {
     try {
-      const saved = localStorage.getItem('zv_cart');
+      const saved = localStorage.getItem('zaroora_cart');
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -38,7 +39,7 @@ export default function App() {
   // Sync cart to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('zv_cart', JSON.stringify(cart));
+      localStorage.setItem('zaroora_cart', JSON.stringify(cart));
     } catch (e) {}
   }, [cart]);
 
@@ -57,8 +58,6 @@ export default function App() {
     if (sortBy === 'price-high') return b.priceNumeric - a.priceNumeric;
     return 0;
   });
-
-  const bestSellers = products.slice(0, 4);
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -117,17 +116,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenQuote = (product) => {
-    setSelectedProduct(product);
-    setModalType('quote');
-    setFormSubmitted(false);
-  };
-
-  const handleOpenPartner = (type = 'partner') => {
-    setModalType(type);
-    setFormSubmitted(false);
-  };
-
   const closeModal = () => {
     setModalType(null);
     setSelectedProduct(null);
@@ -156,17 +144,6 @@ export default function App() {
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const menuCategories = [
-    { id: 'all', name: 'Shop' },
-    { id: 'home-and-kitchen', name: 'Home And Kitchen' },
-    { id: 'office-products', name: 'Office Products' },
-    { id: 'pet-supplies', name: 'Pet Supplies' },
-    { id: 'sports-and-outdoors', name: 'Sports And Outdoors' },
-    { id: 'tools-and-home-improvement', name: 'Tools And Home Improvement' },
-    { id: 'automotive', name: 'Automotive' },
-    { id: 'baby-products', name: 'Baby Products' }
-  ];
 
   return (
     <div className="min-h-screen bg-[#f5f7f9] text-[#1e293b]">
@@ -200,27 +177,29 @@ export default function App() {
       {/* 1. TOP ANNOUNCEMENT BAR */}
       <div className="top-bar">
         <div className="top-bar-item">
-          <span>Official Store: <strong>ZULQARNAIN VENTURES LLC</strong></span>
+          <span>Official Store: <strong>ZAROORA LLC</strong></span>
           <span style={{ opacity: 0.5, margin: '0 6px' }}>•</span>
-          <span>Reliable Products, Competitive Prices & Fast Shipping</span>
+          <span>Owned by Muhammad Nasir</span>
+          <span style={{ opacity: 0.5, margin: '0 6px' }}>•</span>
+          <span>Everyday Essentials & Direct E-Commerce Solutions</span>
         </div>
         <div className="top-bar-contact">
           <div className="top-bar-item">
             <Phone size={14} color="#93c5fd" />
-            <a href="tel:+966537842419">(+966) 537842419</a>
+            <a href="tel:+923246105221">(+92) 324 6105221</a>
           </div>
           <div className="top-bar-item">
             <Mail size={14} color="#93c5fd" />
-            <a href="mailto:ZULQARNAINY462@GMAIL.COM">ZULQARNAINY462@GMAIL.COM</a>
+            <a href="mailto:info@zaroorallc.com">info@zaroorallc.com</a>
           </div>
           <div className="top-bar-item">
             <a 
-              href="https://wa.me/+966537842419" 
+              href="https://wa.me/+923246105221" 
               target="_blank" 
               rel="noreferrer"
               style={{ color: '#4ade80', fontWeight: '600' }}
             >
-              WhatsApp Support
+              WhatsApp (+92)
             </a>
           </div>
         </div>
@@ -229,10 +208,10 @@ export default function App() {
       {/* 2. MAIN HEADER NAVIGATION WITH OFFICIAL LOGO */}
       <header className="main-nav">
         <div className="nav-brand" onClick={() => navigateTo('home')} style={{ cursor: 'pointer' }}>
-          <img src={logoImg} alt="Zulqarnain Ventures LLC Logo" className="brand-logo-img" />
+          <img src={logoImg} alt="ZAROORA LLC Logo" className="brand-logo-img" />
           <div>
-            <div className="brand-title">Zulqarnain Ventures LLC</div>
-            <div className="brand-subtitle">Modern Everyday E-Commerce Store</div>
+            <div className="brand-title">ZAROORA LLC</div>
+            <div className="brand-subtitle">Muhammad Nasir • Everyday Essentials</div>
           </div>
         </div>
 
@@ -253,18 +232,32 @@ export default function App() {
             </li>
             <li>
               <button 
-                className={`nav-link ${activeTab === 'shop' || (activeTab === 'home' && selectedCategory !== 'all') ? 'active' : ''}`}
+                className={`nav-link ${activeTab === 'shop' ? 'active' : ''}`}
                 onClick={() => {
                   setSelectedCategory('all');
-                  navigateTo('home');
-                  setTimeout(() => {
-                    const el = document.getElementById('featured-products-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 50);
+                  navigateTo('shop');
                 }}
                 style={{ background: 'none', border: 'none', font: 'inherit' }}
               >
-                Shop Catalog
+                Shop
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`nav-link ${activeTab === 'categories' ? 'active' : ''}`}
+                onClick={() => navigateTo('categories')}
+                style={{ background: 'none', border: 'none', font: 'inherit' }}
+              >
+                Categories
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`nav-link ${activeTab === 'about' ? 'active' : ''}`}
+                onClick={() => navigateTo('about')}
+                style={{ background: 'none', border: 'none', font: 'inherit' }}
+              >
+                About Us
               </button>
             </li>
             <li>
@@ -274,6 +267,15 @@ export default function App() {
                 style={{ background: 'none', border: 'none', font: 'inherit' }}
               >
                 Contact Us
+              </button>
+            </li>
+            <li>
+              <button 
+                className="nav-link"
+                onClick={() => setModalType('account')}
+                style={{ background: 'none', border: 'none', font: 'inherit' }}
+              >
+                My Account
               </button>
             </li>
           </ul>
@@ -294,7 +296,7 @@ export default function App() {
 
           <a 
             className="btn-nav-partner"
-            href="https://wa.me/+966537842419"
+            href="https://wa.me/+923246105221"
             target="_blank"
             rel="noreferrer"
             style={{ textDecoration: 'none' }}
@@ -319,64 +321,26 @@ export default function App() {
         </div>
       </header>
 
-      {/* DEPARTMENT CATEGORIES STRIP */}
-      <div className="dept-strip-bar">
-        <div className="dept-strip-container">
-          <button 
-            className={`dept-strip-item ${selectedCategory === 'all' ? 'active' : ''}`}
-            onClick={() => {
-              setSelectedCategory('all');
-              navigateTo('home');
-              setTimeout(() => {
-                const el = document.getElementById('featured-products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 50);
-            }}
-          >
-            All Products
-          </button>
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              className={`dept-strip-item ${selectedCategory === cat.id ? 'active' : ''}`}
-              onClick={() => {
-                navigateTo('home', cat.id);
-                setTimeout(() => {
-                  const el = document.getElementById('featured-products-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
-              }}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* MOBILE MENU ACCORDION */}
+      {/* MOBILE FLYOUT NAVIGATION */}
       {mobileMenuOpen && (
         <div style={{
           background: '#ffffff',
-          padding: '20px',
           borderBottom: '2px solid #e2e8f0',
+          padding: '16px 20px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px'
+          gap: '12px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.06)'
         }}>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              setCartOpen(true);
-            }}
+          <button 
+            onClick={() => setCartOpen(true)}
             style={{
-              textAlign: 'left',
-              padding: '10px 14px',
-              background: '#e6f4f8',
-              color: '#1e7087',
+              padding: '12px 16px',
+              background: '#0f2432',
+              color: '#ffffff',
               border: 'none',
               borderRadius: '8px',
               fontWeight: '600',
-              fontSize: '0.95rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between'
@@ -397,8 +361,8 @@ export default function App() {
             style={{
               textAlign: 'left',
               padding: '10px 14px',
-              background: activeTab === 'home' && selectedCategory === 'all' ? '#e6f4f8' : 'transparent',
-              color: activeTab === 'home' && selectedCategory === 'all' ? '#1e7087' : '#334155',
+              background: activeTab === 'home' ? '#e6f4f8' : 'transparent',
+              color: activeTab === 'home' ? '#1e7087' : '#334155',
               border: 'none',
               borderRadius: '8px',
               fontWeight: '600',
@@ -408,30 +372,53 @@ export default function App() {
             Home
           </button>
 
-          {menuCategories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                navigateTo('home', cat.id);
-                setTimeout(() => {
-                  const el = document.getElementById('featured-products-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
-              }}
-              style={{
-                textAlign: 'left',
-                padding: '10px 14px',
-                background: selectedCategory === cat.id ? '#e6f4f8' : 'transparent',
-                color: selectedCategory === cat.id ? '#1e7087' : '#334155',
-                border: 'none',
-                borderRadius: '8px',
-                fontWeight: '600',
-                fontSize: '0.95rem'
-              }}
-            >
-              {cat.name}
-            </button>
-          ))}
+          <button
+            onClick={() => navigateTo('shop')}
+            style={{
+              textAlign: 'left',
+              padding: '10px 14px',
+              background: activeTab === 'shop' ? '#e6f4f8' : 'transparent',
+              color: activeTab === 'shop' ? '#1e7087' : '#334155',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}
+          >
+            Shop
+          </button>
+
+          <button
+            onClick={() => navigateTo('categories')}
+            style={{
+              textAlign: 'left',
+              padding: '10px 14px',
+              background: activeTab === 'categories' ? '#e6f4f8' : 'transparent',
+              color: activeTab === 'categories' ? '#1e7087' : '#334155',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}
+          >
+            Categories
+          </button>
+
+          <button
+            onClick={() => navigateTo('about')}
+            style={{
+              textAlign: 'left',
+              padding: '10px 14px',
+              background: activeTab === 'about' ? '#e6f4f8' : 'transparent',
+              color: activeTab === 'about' ? '#1e7087' : '#334155',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}
+          >
+            About Us
+          </button>
 
           <button
             onClick={() => navigateTo('contact')}
@@ -439,14 +426,33 @@ export default function App() {
               textAlign: 'left',
               padding: '10px 14px',
               background: activeTab === 'contact' ? '#e6f4f8' : 'transparent',
-              color: activeTab === 'contact' ? '#0c0f10ff' : '#334155',
+              color: activeTab === 'contact' ? '#1e7087' : '#334155',
               border: 'none',
               borderRadius: '8px',
               fontWeight: '600',
               fontSize: '0.95rem'
             }}
           >
-            Contacts & Support
+            Contact Us
+          </button>
+
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setModalType('account');
+            }}
+            style={{
+              textAlign: 'left',
+              padding: '10px 14px',
+              background: 'transparent',
+              color: '#334155',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}
+          >
+            My Account
           </button>
         </div>
       )}
@@ -454,21 +460,27 @@ export default function App() {
       {/* VIEW: HOME PAGE */}
       {activeTab === 'home' && (
         <main id="main-content">
-          {/* HERO SECTION AS REQUESTED */}
+          {/* HERO SECTION WITH USER SPECIFIED COPY */}
           <section className="hero-section">
             <div className="hero-overlay"></div>
             <div className="hero-container">
               <div className="hero-content">
-                <div className="hero-pretitle">THE ONLY ONE</div>
-                <h1 className="hero-title">zulqarnain ventures LLC</h1>
-                <p className="hero-description">
-                  Zulqarnain Ventures LLC is a modern e-commerce store offering a wide range of quality products for everyday needs. We focus on providing reliable products, competitive prices, and a convenient online shopping experience for our customers.
+                <div className="hero-pretitle">MUHAMMAD NASIR • E-COMMERCE</div>
+                <h1 className="hero-title">ZAROORA LLC</h1>
+                <p className="hero-description" style={{ fontSize: '1.15rem', fontWeight: '500', marginBottom: '14px', color: '#f8fafc' }}>
+                  Zaroora LLC is an e-commerce-focused company dedicated to building and managing online businesses with a professional and customer-oriented approach.
+                </p>
+                <p className="hero-description" style={{ fontSize: '0.98rem', opacity: 0.9, marginBottom: '20px' }}>
+                  The company is owned by Muhammad Nasir, who oversees the business operations and strategic direction of Zaroora LLC. Under his leadership, the company focuses on e-commerce, online retail, product sourcing, and marketplace-based business solutions.
+                </p>
+                <p style={{ color: '#93c5fd', fontSize: '0.92rem', marginBottom: '28px', fontStyle: 'italic' }}>
+                  Our goal is to build reliable and sustainable e-commerce operations by combining quality products, efficient business management, and long-term growth strategies.
                 </p>
                 <div className="hero-actions">
                   <button 
                     className="btn-hero-primary"
                     onClick={() => {
-                      const el = document.getElementById('featured-products-section');
+                      const el = document.getElementById('collection-section');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
@@ -476,162 +488,76 @@ export default function App() {
                   </button>
                   <button 
                     className="btn-hero-outline"
-                    onClick={() => {
-                      const el = document.getElementById('featured-products-section');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => navigateTo('categories')}
                   >
-                    Browse Deals
+                    Browse Categories
                   </button>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* TWO HIGHLIGHT CATEGORY PROMO CARDS AS REQUESTED */}
+          {/* SHOP BY CATEGORY - 3 PROMO BANNERS AS REQUESTED */}
           <section className="section-wrapper" style={{ paddingBottom: '10px' }}>
+            <div className="section-header-center" style={{ marginBottom: '28px' }}>
+              <span className="section-tag">FEATURED DEPARTMENTS</span>
+              <h2 className="section-title">Shop By Category</h2>
+              <p className="section-subtitle">Curated essentials tailored for every home, wellness, and lifestyle routine</p>
+            </div>
+
             <div className="categories-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
-              <div 
-                className="category-card"
-                onClick={() => {
-                  setSelectedCategory('health-and-household');
-                  const el = document.getElementById('featured-products-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Health & Household" 
-                  className="category-card-img" 
-                  loading="lazy"
-                />
-                <div className="category-card-overlay">
-                  <span style={{ fontSize: '0.85rem', color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>
-                    Health & Household
-                  </span>
-                  <h3 className="category-title" style={{ fontSize: '1.4rem', marginTop: '4px' }}>
-                    Everyday essentials for a healthier, happier home.
-                  </h3>
-                  <button 
-                    className="btn-category-pill"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedCategory('health-and-household');
-                      const el = document.getElementById('featured-products-section');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Shop
-                  </button>
-                </div>
-              </div>
-
-              <div 
-                className="category-card"
-                onClick={() => {
-                  setSelectedCategory('home-and-kitchen');
-                  const el = document.getElementById('featured-products-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Home & Kitchen" 
-                  className="category-card-img" 
-                  loading="lazy"
-                />
-                <div className="category-card-overlay">
-                  <span style={{ fontSize: '0.85rem', color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>
-                    Home & Kitchen
-                  </span>
-                  <h3 className="category-title" style={{ fontSize: '1.4rem', marginTop: '4px' }}>
-                    Smart finds for cooking, organizing, and comfortable living.
-                  </h3>
-                  <button 
-                    className="btn-category-pill"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedCategory('home-and-kitchen');
-                      const el = document.getElementById('featured-products-section');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Shop
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-
-          {/* SHOP ALL PRODUCTS CATALOG SECTION */}
-          <section id="featured-products-section" className="section-wrapper" style={{ paddingTop: '20px' }}>
-            <div className="section-header-center">
-              <span className="section-tag">ONLINE CATALOG</span>
-              <h2 className="section-title">All Products</h2>
-              <p className="section-subtitle">Explore our full inventory across all everyday departments</p>
-            </div>
-
-            {/* Category Filter Tabs */}
-            <div className="filter-tabs">
-              <button 
-                className={`filter-tab ${selectedCategory === 'all' ? 'active' : ''}`}
-                onClick={() => setSelectedCategory('all')}
-              >
-                All Products ({products.length})
-              </button>
-              {categories.map(cat => (
-                <button
-                  key={cat.id}
-                  className={`filter-tab ${selectedCategory === cat.id ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat.id)}
+              {categoryBanners.map(banner => (
+                <div 
+                  key={banner.id}
+                  className="category-card"
+                  onClick={() => {
+                    setSelectedCategory(banner.categoryId);
+                    navigateTo('shop', banner.categoryId);
+                  }}
                 >
-                  {cat.name}
-                </button>
+                  <img 
+                    src={banner.image} 
+                    alt={banner.title} 
+                    className="category-card-img" 
+                    loading="lazy"
+                  />
+                  <div className="category-card-overlay">
+                    <span style={{ fontSize: '0.85rem', color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>
+                      {banner.tag}
+                    </span>
+                    <h3 className="category-title" style={{ fontSize: '1.4rem', marginTop: '4px' }}>
+                      {banner.title}
+                    </h3>
+                    <p style={{ fontSize: '0.9rem', color: '#e2e8f0', margin: '8px 0 16px' }}>
+                      {banner.description}
+                    </p>
+                    <button 
+                      className="btn-category-pill"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedCategory(banner.categoryId);
+                        navigateTo('shop', banner.categoryId);
+                      }}
+                    >
+                      {banner.buttonText}
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
+          </section>
 
-            {/* Controls Bar: Search + Sorting */}
-            <div className="catalog-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
-              <div style={{ color: '#64748b', fontSize: '0.95rem', fontWeight: '500' }}>
-                Showing all {filteredProducts.length} results
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                <div className="search-container" style={{ margin: 0, minWidth: '260px' }}>
-                  <Search className="search-icon" size={16} />
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="search-input"
-                    style={{ padding: '10px 16px 10px 42px', fontSize: '0.9rem' }}
-                  />
-                </div>
-
-                <div className="sort-selector-wrapper">
-                  <select 
-                    id="sort-select" 
-                    value={sortBy} 
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="sort-dropdown"
-                    style={{ padding: '10px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.9rem', color: '#1e293b', cursor: 'pointer' }}
-                  >
-                    <option value="default">Default sorting</option>
-                    <option value="popularity">Sort by popularity</option>
-                    <option value="rating">Sort by average rating</option>
-                    <option value="latest">Sort by latest</option>
-                    <option value="price-low">Sort by price: low to high</option>
-                    <option value="price-high">Sort by price: high to low</option>
-                  </select>
-                </div>
-              </div>
+          {/* BROWSE OUR COLLECTION - 4 EXACT PRODUCTS AS SPECIFIED */}
+          <section id="collection-section" className="section-wrapper" style={{ paddingTop: '20px' }}>
+            <div className="section-header-center">
+              <span className="section-tag">CURATED FOR YOU</span>
+              <h2 className="section-title">Browse Our Collection</h2>
+              <p className="section-subtitle">Everyday practical essentials with transparent pricing and fast fulfillment</p>
             </div>
 
-            {/* Products Grid */}
+            {/* Collection Grid */}
             <div className="products-grid">
-              {filteredProducts.map((prod) => (
+              {products.map((prod) => (
                 <div 
                   key={prod.id} 
                   className="product-card"
@@ -651,13 +577,21 @@ export default function App() {
                   <div className="product-body">
                     <div>
                       <span className="product-sku">SKU: {prod.sku}</span>
-                      <h3 className="product-title">{prod.name}</h3>
+                      <h3 className="product-title">{prod.shortTitle || prod.name}</h3>
+                      <p style={{ fontSize: '0.86rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>
+                        {prod.description}
+                      </p>
                     </div>
                     
                     <div>
-                      <div className="product-price-box">
+                      <div className="product-price-box" style={{ marginTop: '12px' }}>
                         <div className="product-price-val">{prod.price}</div>
-                        <span className="product-price-sub">{prod.priceNote}</span>
+                        {prod.originalPrice && (
+                          <span style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.85rem', marginLeft: '8px' }}>
+                            {prod.originalPrice}
+                          </span>
+                        )}
+                        <span className="product-price-sub" style={{ marginLeft: 'auto' }}>{prod.badge}</span>
                       </div>
 
                       <div className="product-actions-row">
@@ -680,7 +614,7 @@ export default function App() {
                           title="View Full Specifications & Details"
                         >
                           <Eye size={15} />
-                          <span>View Details</span>
+                          <span>Details</span>
                         </button>
                       </div>
                     </div>
@@ -689,25 +623,161 @@ export default function App() {
               ))}
             </div>
 
-            {filteredProducts.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '16px' }}>
-                <p style={{ fontSize: '1.1rem', color: '#64748b' }}>No products match your search or filter.</p>
-                <button 
-                  onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
-                  style={{ marginTop: '12px', background: '#1e7087', color: '#fff', padding: '8px 20px', borderRadius: '20px', border: 'none', cursor: 'pointer' }}
-                >
-                  Reset Filters
-                </button>
-              </div>
-            )}
+            <div style={{ textAlign: 'center', marginTop: '40px' }}>
+              <button
+                className="btn-hero-primary"
+                onClick={() => navigateTo('shop')}
+                style={{ padding: '14px 36px', fontSize: '1rem', display: 'inline-flex', alignItems: 'center', gap: '10px' }}
+              >
+                <span>Shop All Products</span>
+                <ArrowRight size={18} />
+              </button>
+            </div>
           </section>
 
-          {/* CUSTOMER REVIEWS SECTION AS REQUESTED */}
+          {/* CORPORATE PROFILE & OWNER INFORMATION FOR ZAROORA LLC */}
+          <section className="corporate-profile-section" style={{ marginTop: '40px' }}>
+            <div className="corporate-profile-container">
+              
+              {/* Left Column: Corporate Entity Info */}
+              <div className="corporate-credentials-col">
+                <div className="corp-section-eyebrow">
+                  <span className="corp-dot"></span>
+                  EXCELLENCE IN E-COMMERCE & SOURCING
+                </div>
+                
+                <h2 className="corp-headline">
+                  ZAROORA LLC
+                </h2>
+                
+                <p className="corp-lead-text">
+                  Zaroora LLC is an e-commerce-focused company dedicated to building and managing online businesses with a professional and customer-oriented approach.
+                </p>
+
+                {/* Structured Verification Ledger */}
+                <div className="corp-ledger">
+                  <div className="corp-ledger-row">
+                    <span className="ledger-label">Business Owner</span>
+                    <div className="ledger-val-group">
+                      <strong>MUHAMMAD NASIR</strong>
+                      <span className="ledger-sub">Managing Business Operations & Strategic Direction</span>
+                    </div>
+                  </div>
+
+                  <div className="corp-ledger-row">
+                    <span className="ledger-label">Core Specialization</span>
+                    <div className="ledger-val-group">
+                      <span>E-commerce, online retail, product sourcing, and marketplace-based business solutions.</span>
+                    </div>
+                  </div>
+
+                  <div className="corp-ledger-row">
+                    <span className="ledger-label">Strategic Mission</span>
+                    <div className="ledger-val-group">
+                      <span>Building reliable and sustainable e-commerce operations by combining quality products, efficient business management, and long-term growth strategies.</span>
+                    </div>
+                  </div>
+
+                  <div className="corp-ledger-row">
+                    <span className="ledger-label">Customer Support</span>
+                    <div className="ledger-val-group">
+                      <span>Direct phone support at (+92) 324 6105221, official email at info@zaroorallc.com, and live WhatsApp assistance.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="corp-actions-row">
+                  <button 
+                    className="btn-corp-primary"
+                    onClick={() => navigateTo('shop')}
+                  >
+                    <span>Browse All Products</span>
+                    <ArrowRight size={16} />
+                  </button>
+                  <a 
+                    className="btn-corp-outline"
+                    href="https://wa.me/+923246105221"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: Direct Help & Orders Desk */}
+              <div className="corporate-trade-desk">
+                <div className="trade-desk-badge-strip">
+                  <span className="trade-desk-status">
+                    <span className="pulse-indicator"></span> Support & Orders Active
+                  </span>
+                  <span className="trade-desk-id">Direct Contact</span>
+                </div>
+
+                <h3 className="trade-desk-title">Contacts & Inquiries</h3>
+                
+                <p className="trade-desk-desc">
+                  Have questions about our collection, need order assistance, or want to inquire about product sourcing? Reach Muhammad Nasir and the Zaroora LLC team directly.
+                </p>
+
+                <div className="trade-desk-contacts">
+                  <a href="tel:+923246105221" className="trade-contact-item">
+                    <div className="contact-icon-box">
+                      <Phone size={18} />
+                    </div>
+                    <div className="contact-details">
+                      <span className="contact-role">Direct Phone Line</span>
+                      <strong className="contact-val">(+92) 324 6105221</strong>
+                    </div>
+                  </a>
+
+                  <a href="mailto:info@zaroorallc.com" className="trade-contact-item">
+                    <div className="contact-icon-box">
+                      <Mail size={18} />
+                    </div>
+                    <div className="contact-details">
+                      <span className="contact-role">Official Email</span>
+                      <strong className="contact-val">info@zaroorallc.com</strong>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="https://wa.me/+923246105221" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="trade-contact-item"
+                  >
+                    <div className="contact-icon-box" style={{ background: '#dcfce7', color: '#16a34a' }}>
+                      <MessageSquare size={18} />
+                    </div>
+                    <div className="contact-details">
+                      <span className="contact-role">WhatsApp Instant Support</span>
+                      <strong className="contact-val" style={{ color: '#16a34a' }}>(+92) 324 6105221</strong>
+                    </div>
+                  </a>
+                </div>
+
+                <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '10px' }}>Follow Us On Socials</div>
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <a href="https://facebook.com/" target="_blank" rel="noreferrer" className="btn-social-tag">Facebook</a>
+                    <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="btn-social-tag">Instagram</a>
+                    <a href="https://tiktok.com/" target="_blank" rel="noreferrer" className="btn-social-tag">TikTok</a>
+                    <a href="https://wa.me/+923246105221" target="_blank" rel="noreferrer" className="btn-social-tag" style={{ color: '#16a34a' }}>WhatsApp</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* CUSTOMER REVIEWS SECTION */}
           <section className="section-wrapper" style={{ paddingTop: '20px', paddingBottom: '40px' }}>
             <div className="section-header-center">
               <span className="section-tag">TESTIMONIALS</span>
               <h2 className="section-title">Customer Reviews</h2>
-              <p className="section-subtitle">Real experiences from shoppers who trust Zulqarnain Ventures LLC</p>
+              <p className="section-subtitle">Real experiences from shoppers who trust Zaroora LLC</p>
             </div>
 
             <div style={{
@@ -734,7 +804,7 @@ export default function App() {
                     ))}
                   </div>
                   <p style={{ fontSize: '1.05rem', color: '#1e293b', fontStyle: 'italic', lineHeight: 1.6 }}>
-                    “Fast shipping, excellent quality, and prices that make stocking up wonderfully simple.”
+                    “The Tools & Office Supplies set exceeded my expectations. Practical essentials, well-packaged, and quick doorstep delivery!”
                   </p>
                 </div>
                 <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -749,11 +819,11 @@ export default function App() {
                     justifyContent: 'center',
                     fontWeight: '700'
                   }}>
-                    A
+                    M
                   </div>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#0f172a' }}>Verified Customer</div>
-                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>Repeat Online Shopper</div>
+                    <div style={{ fontWeight: '600', color: '#0f172a' }}>Verified Shopper</div>
+                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>Office & Home Customer</div>
                   </div>
                 </div>
               </div>
@@ -775,7 +845,48 @@ export default function App() {
                     ))}
                   </div>
                   <p style={{ fontSize: '1.05rem', color: '#1e293b', fontStyle: 'italic', lineHeight: 1.6 }}>
-                    “Everything arrived safely and matched the descriptions perfectly. I’ll definitely shop here again.”
+                    “Zaroora LLC offers genuine convenience. Great pricing in ₨ and responsive customer service on WhatsApp.”
+                  </p>
+                </div>
+                <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    background: '#dcfce7',
+                    color: '#16a34a',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: '700'
+                  }}>
+                    F
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: '600', color: '#0f172a' }}>Fatima K.</div>
+                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>Beauty & Personal Care Client</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                background: '#ffffff',
+                padding: '30px',
+                borderRadius: '16px',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.03)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}>
+                <div>
+                  <div style={{ display: 'flex', gap: '4px', color: '#f59e0b', marginBottom: '14px' }}>
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={18} fill="#f59e0b" />
+                    ))}
+                  </div>
+                  <p style={{ fontSize: '1.05rem', color: '#1e293b', fontStyle: 'italic', lineHeight: 1.6 }}>
+                    “Muhammad Nasir and team run a very professional operation. All items arrived properly sealed with prompt updates.”
                   </p>
                 </div>
                 <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -790,324 +901,437 @@ export default function App() {
                     justifyContent: 'center',
                     fontWeight: '700'
                   }}>
-                    R
+                    T
                   </div>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#0f172a' }}>Verified Customer</div>
-                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>Home & Kitchen Buyer</div>
+                    <div style={{ fontWeight: '600', color: '#0f172a' }}>Tariq A.</div>
+                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>Sports & Outdoor Customer</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-
-          {/* CORPORATE PROFILE & DIRECT DESK FOR ZULQARNAIN VENTURES LLC */}
-          <section className="corporate-profile-section">
-            <div className="corporate-profile-container">
-              
-              {/* Left Column: Corporate Entity Info */}
-              <div className="corporate-credentials-col">
-                <div className="corp-section-eyebrow">
-                  <span className="corp-dot"></span>
-                  COMMITTED TO EXCELLENCE & CONVENIENT SHOPPING
-                </div>
-                
-                <h2 className="corp-headline">
-                  Zulqarnain Ventures LLC
-                </h2>
-                
-                <p className="corp-lead-text">
-                  Zulqarnain Ventures LLC is a modern e-commerce store offering a wide range of quality products for everyday needs. We focus on providing reliable products, competitive prices, and a convenient online shopping experience for our customers.
-                </p>
-
-                {/* Structured Verification Ledger */}
-                <div className="corp-ledger">
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Company Name</span>
-                    <div className="ledger-val-group">
-                      <strong>Zulqarnain Ventures LLC</strong>
-                      <span className="ledger-sub">Modern E-Commerce Store & Direct Distributor</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Core Mission</span>
-                    <div className="ledger-val-group">
-                      <span>Delivering tested, high-quality products for home, office, kitchen, and lifestyle with transparent pricing.</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Customer Support</span>
-                    <div className="ledger-val-group">
-                      <span>Direct phone, email, and live WhatsApp assistance for all orders and product inquiries.</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Product Departments</span>
-                    <div className="ledger-val-group">
-                      <span>Home & Kitchen • Health & Household • Office • Pet Supplies • Sports & Outdoors • Tools • Automotive • Baby Products</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="corp-actions-row">
-                  <button 
-                    className="btn-corp-primary"
-                    onClick={() => {
-                      const el = document.getElementById('featured-products-section');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    <span>Browse All Products</span>
-                    <ArrowRight size={16} />
-                  </button>
-                  <a 
-                    className="btn-corp-outline"
-                    href="https://wa.me/+966537842419"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <span>Chat on WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column: Direct Help & Orders Desk */}
-              <div className="corporate-trade-desk">
-                <div className="trade-desk-badge-strip">
-                  <span className="trade-desk-status">
-                    <span className="pulse-indicator"></span> Support & Orders Active
-                  </span>
-                  <span className="trade-desk-id">24/7 Response</span>
-                </div>
-
-                <h3 className="trade-desk-title">Order Inquiries & Support</h3>
-                
-                <p className="trade-desk-desc">
-                  Have questions about our products, need assistance with your order, or want to discuss multi-item orders? Contact our team anytime.
-                </p>
-
-                <div className="trade-desk-contacts">
-                  <a href="tel:+966537842419" className="trade-contact-item">
-                    <div className="contact-icon-box">
-                      <Phone size={18} />
-                    </div>
-                    <div className="contact-details">
-                      <span className="contact-role">Direct Phone & Support</span>
-                      <strong className="contact-val">(+966) 537842419</strong>
-                    </div>
-                  </a>
-
-                  <a href="mailto:ZULQARNAINY462@GMAIL.COM" className="trade-contact-item">
-                    <div className="contact-icon-box">
-                      <Mail size={18} />
-                    </div>
-                    <div className="contact-details">
-                      <span className="contact-role">Direct Email Address</span>
-                      <strong className="contact-val">ZULQARNAINY462@GMAIL.COM</strong>
-                    </div>
-                  </a>
-
-                  <a 
-                    href="https://wa.me/+966537842419" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="trade-contact-item"
-                  >
-                    <div className="contact-icon-box" style={{ background: '#dcfce7', color: '#16a34a' }}>
-                      <MessageSquare size={18} />
-                    </div>
-                    <div className="contact-details">
-                      <span className="contact-role">Instant WhatsApp Support</span>
-                      <strong className="contact-val">(+966) 537842419</strong>
-                      <span className="contact-note">Fastest reply for tracking & orders</span>
-                    </div>
-                  </a>
-                </div>
-
-                <div className="trade-desk-cta-group">
-                  <a 
-                    href="https://wa.me/+966537842419" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="btn-trade-whatsapp"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12.031 2C6.494 2 2 6.494 2 12.031c0 1.95.558 3.771 1.523 5.319L2.094 22l4.802-1.408a10.02 10.02 0 0 0 5.135 1.44c5.537 0 10.031-4.494 10.031-10.031S17.568 2 12.031 2zm5.727 14.152c-.24.673-1.393 1.282-1.922 1.346-.51.063-1.168.089-3.743-.977-3.136-1.298-5.14-4.524-5.297-4.733-.153-.209-1.264-1.684-1.264-3.213s.801-2.28 1.086-2.585c.285-.306.621-.382.828-.382.207 0 .414.002.595.011.192.01.448-.073.701.536.262.632.894 2.181.972 2.34.078.158.13.344.026.552-.104.209-.156.338-.311.52-.156.182-.328.406-.468.545-.156.155-.319.324-.137.636.182.312.81 1.336 1.737 2.161 1.192 1.062 2.196 1.391 2.508 1.547.312.156.494.13.676-.078.182-.208.78-.909.988-1.221.208-.312.416-.26.697-.156.281.104 1.79.845 2.099 1 .309.155.515.234.59.364.075.13.075.754-.165 1.427z"/>
-                    </svg>
-                    <span>Chat on WhatsApp (+966)</span>
-                  </a>
-                  <button 
-                    onClick={() => handleOpenPartner('contact')}
-                    className="btn-trade-rfq"
-                  >
-                    <span>Send Message</span>
-                  </button>
-                </div>
-              </div>
-
             </div>
           </section>
         </main>
       )}
 
-      {/* VIEW: PRODUCT DETAIL PAGE */}
-      {activeTab === 'product-detail' && activeProduct && (
-        <main className="product-detail-page">
-          <div className="detail-container">
-            <div className="detail-top-nav">
-              <button 
-                className="btn-back-catalog"
-                onClick={() => navigateTo('home')}
+      {/* VIEW: SHOP CATALOG */}
+      {activeTab === 'shop' && (
+        <main className="section-wrapper" style={{ paddingTop: '40px' }}>
+          <div className="section-header-center">
+            <span className="section-tag">CATALOG & ONLINE RETAIL</span>
+            <h1 className="section-title">Shop All Products</h1>
+            <p className="section-subtitle">Browse through our quality inventory with competitive prices and swift checkout</p>
+          </div>
+
+          {/* Category Filter Tabs */}
+          <div className="filter-tabs">
+            <button 
+              className={`filter-tab ${selectedCategory === 'all' ? 'active' : ''}`}
+              onClick={() => setSelectedCategory('all')}
+            >
+              All Products ({products.length})
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                className={`filter-tab ${selectedCategory === cat.id ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat.id)}
               >
-                <ArrowLeft size={16} />
-                <span>Back to Catalog</span>
+                {cat.name}
               </button>
-              <div className="detail-breadcrumbs">
-                <span className="crumb-link" onClick={() => navigateTo('home')}>Home</span>
-                <span className="crumb-sep">/</span>
-                <span className="crumb-link" onClick={() => { setActiveCategory(activeProduct.categoryId); navigateTo('home'); }}>{activeProduct.categoryName}</span>
-                <span className="crumb-sep">/</span>
-                <span className="crumb-current">{activeProduct.name}</span>
+            ))}
+          </div>
+
+          {/* Toolbar: Search + Sorting */}
+          <div className="catalog-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
+            <div style={{ color: '#64748b', fontSize: '0.95rem', fontWeight: '500' }}>
+              Showing {filteredProducts.length} results
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <div className="search-container" style={{ margin: 0, minWidth: '260px' }}>
+                <Search className="search-icon" size={16} />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                  style={{ padding: '10px 16px 10px 42px', fontSize: '0.9rem' }}
+                />
+              </div>
+
+              <div className="sort-selector-wrapper">
+                <select 
+                  id="sort-select" 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="sort-dropdown"
+                  style={{ padding: '10px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#fff', fontSize: '0.9rem', color: '#1e293b', cursor: 'pointer' }}
+                >
+                  <option value="default">Default sorting</option>
+                  <option value="popularity">Sort by popularity</option>
+                  <option value="rating">Sort by average rating</option>
+                  <option value="latest">Sort by latest</option>
+                  <option value="price-low">Sort by price: low to high</option>
+                  <option value="price-high">Sort by price: high to low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Products Grid */}
+          <div className="products-grid">
+            {filteredProducts.map((prod) => (
+              <div 
+                key={prod.id} 
+                className="product-card"
+                onClick={() => viewProductDetail(prod)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="product-img-wrap">
+                  <span className="product-badge">{prod.categoryName}</span>
+                  <img 
+                    src={prod.image} 
+                    alt={prod.name} 
+                    className="product-img" 
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="product-body">
+                  <div>
+                    <span className="product-sku">SKU: {prod.sku}</span>
+                    <h3 className="product-title">{prod.name}</h3>
+                    <p style={{ fontSize: '0.86rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>
+                      {prod.description}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="product-price-box" style={{ marginTop: '12px' }}>
+                      <div className="product-price-val">{prod.price}</div>
+                      {prod.originalPrice && (
+                        <span style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.85rem', marginLeft: '8px' }}>
+                          {prod.originalPrice}
+                        </span>
+                      )}
+                      <span className="product-price-sub" style={{ marginLeft: 'auto' }}>{prod.badge}</span>
+                    </div>
+
+                    <div className="product-actions-row">
+                      <button 
+                        className="btn-add-cart"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(prod, 1, true);
+                        }}
+                      >
+                        <ShoppingCart size={15} />
+                        <span>Add to cart</span>
+                      </button>
+                      <button 
+                        className="btn-view-details"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          viewProductDetail(prod);
+                        }}
+                      >
+                        <Eye size={15} />
+                        <span>Details</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredProducts.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '16px' }}>
+              <p style={{ fontSize: '1.1rem', color: '#64748b' }}>No products match your search or filter.</p>
+              <button 
+                onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
+                style={{ marginTop: '12px', background: '#1e7087', color: '#fff', padding: '8px 20px', borderRadius: '20px', border: 'none', cursor: 'pointer' }}
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
+        </main>
+      )}
+
+      {/* VIEW: CATEGORIES PAGE */}
+      {activeTab === 'categories' && (
+        <main className="section-wrapper" style={{ paddingTop: '40px' }}>
+          <div className="section-header-center">
+            <span className="section-tag">DEPARTMENTS & SECTORS</span>
+            <h1 className="section-title">Product Categories</h1>
+            <p className="section-subtitle">Explore our specialized retail categories and product collections</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '30px' }}>
+            {categories.map(cat => (
+              <div 
+                key={cat.id}
+                onClick={() => {
+                  setSelectedCategory(cat.id);
+                  navigateTo('shop', cat.id);
+                }}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s, box-shadow 0.2s'
+                }}
+              >
+                <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
+                  <img 
+                    src={cat.image} 
+                    alt={cat.name} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '12px',
+                    background: 'rgba(15, 36, 50, 0.85)',
+                    color: '#ffffff',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.78rem',
+                    fontWeight: '600'
+                  }}>
+                    {cat.itemCount}
+                  </div>
+                </div>
+                <div style={{ padding: '20px' }}>
+                  <h3 style={{ fontSize: '1.2rem', color: '#0f172a', marginBottom: '6px' }}>{cat.name}</h3>
+                  <div style={{ fontSize: '0.85rem', color: '#1e7087', fontWeight: '600', marginBottom: '8px' }}>{cat.tagline}</div>
+                  <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.5, marginBottom: '16px' }}>
+                    {cat.description}
+                  </p>
+                  <button 
+                    style={{
+                      background: '#f1f5f9',
+                      border: 'none',
+                      color: '#0f172a',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontWeight: '600',
+                      fontSize: '0.85rem',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <span>{cat.buttonText}</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      )}
+
+      {/* VIEW: ABOUT US PAGE */}
+      {activeTab === 'about' && (
+        <main className="section-wrapper" style={{ padding: '50px 24px', maxWidth: '1000px', margin: '0 auto' }}>
+          <div className="section-header-center">
+            <span className="section-tag">ABOUT US</span>
+            <h1 className="section-title">ZAROORA LLC</h1>
+            <p className="section-subtitle">Dedicated to building and managing premier e-commerce operations</p>
+          </div>
+
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '20px',
+            padding: '40px',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+            marginTop: '30px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '28px', borderBottom: '1px solid #f1f5f9', paddingBottom: '24px' }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                borderRadius: '16px',
+                background: '#e0f2fe',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#0284c7'
+              }}>
+                <Building2 size={32} />
+              </div>
+              <div>
+                <span style={{ fontSize: '0.85rem', color: '#1e7087', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Leadership & Overview
+                </span>
+                <h2 style={{ fontSize: '1.6rem', color: '#0f172a', margin: '2px 0 0' }}>MUHAMMAD NASIR</h2>
+                <div style={{ fontSize: '0.95rem', color: '#64748b' }}>Owner & Managing Director, Zaroora LLC</div>
               </div>
             </div>
 
-            {/* 2-Column Showcase */}
-            <div className="detail-showcase-grid">
-              {/* Product Gallery (Left) */}
-              <div className="detail-gallery-col">
-                <div className="detail-img-card">
-                  <span className="detail-badge-float">{activeProduct.categoryName}</span>
-                  <img 
-                    src={activeProduct.image} 
-                    alt={activeProduct.name} 
-                    className="detail-hero-img" 
-                  />
-                  <div className="detail-verified-badge">
-                    <CheckCircle2 size={14} color="#059669" />
-                    <span>Verified Authentic</span>
-                  </div>
-                </div>
+            <div style={{ lineHeight: 1.8, fontSize: '1.05rem', color: '#334155' }}>
+              <p style={{ marginBottom: '20px' }}>
+                <strong>Zaroora LLC</strong> is an e-commerce-focused company dedicated to building and managing online businesses with a professional and customer-oriented approach.
+              </p>
+              <p style={{ marginBottom: '20px' }}>
+                The company is owned by <strong>Muhammad Nasir</strong>, who oversees the business operations and strategic direction of Zaroora LLC. Under his leadership, the company focuses on e-commerce, online retail, product sourcing, and marketplace-based business solutions.
+              </p>
+              <p style={{ marginBottom: '28px', padding: '16px 20px', background: '#f8fafc', borderLeft: '4px solid #1e7087', borderRadius: '4px', fontStyle: 'italic', color: '#0f172a' }}>
+                “Our goal is to build reliable and sustainable e-commerce operations by combining quality products, efficient business management, and long-term growth strategies.”
+              </p>
+            </div>
 
-                <div className="detail-assurance-strip">
-                  <div className="assurance-item">
-                    <ShieldCheck size={20} className="assurance-icon" />
-                    <div>
-                      <strong>100% Quality Inspected</strong>
-                      <span>Inspected before shipment</span>
-                    </div>
-                  </div>
-                  <div className="assurance-item">
-                    <Truck size={20} className="assurance-icon" />
-                    <div>
-                      <strong>Fast Reliable Delivery</strong>
-                      <span>Direct order handling</span>
-                    </div>
-                  </div>
-                </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginTop: '30px' }}>
+              <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <ShieldCheck size={24} color="#1e7087" style={{ marginBottom: '10px' }} />
+                <h4 style={{ fontSize: '1.05rem', color: '#0f172a', marginBottom: '6px' }}>Quality Assurance</h4>
+                <p style={{ fontSize: '0.88rem', color: '#64748b' }}>Every item in our collection undergoes rigorous product verification and packaging standards.</p>
               </div>
 
-              {/* Product Info (Right) */}
-              <div className="detail-info-col">
+              <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <Truck size={24} color="#1e7087" style={{ marginBottom: '10px' }} />
+                <h4 style={{ fontSize: '1.05rem', color: '#0f172a', marginBottom: '6px' }}>Reliable Fulfillment</h4>
+                <p style={{ fontSize: '0.88rem', color: '#64748b' }}>Direct-to-door delivery with order tracking and rapid customer response times.</p>
+              </div>
+
+              <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <Award size={24} color="#1e7087" style={{ marginBottom: '10px' }} />
+                <h4 style={{ fontSize: '1.05rem', color: '#0f172a', marginBottom: '6px' }}>Customer First</h4>
+                <p style={{ fontSize: '0.88rem', color: '#64748b' }}>Accessible customer support via phone, email, and live WhatsApp chat.</p>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '36px', textAlign: 'center' }}>
+              <button 
+                className="btn-hero-primary"
+                onClick={() => navigateTo('shop')}
+                style={{ padding: '12px 30px' }}
+              >
+                Explore Online Catalog
+              </button>
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* VIEW: PRODUCT DETAIL 2-COLUMN VIEW */}
+      {activeTab === 'product-detail' && activeProduct && (
+        <main className="section-wrapper" style={{ padding: '30px 24px 60px', maxWidth: '1280px', margin: '0 auto' }}>
+          
+          <button 
+            className="btn-back-breadcrumb"
+            onClick={() => navigateTo('home')}
+          >
+            <ArrowLeft size={16} />
+            <span>Back to All Products</span>
+          </button>
+
+          <div className="product-detail-layout">
+            
+            {/* LEFT COLUMN: PRODUCT IMAGERY */}
+            <div className="product-gallery-card">
+              <div className="main-gallery-view">
+                <span className="gallery-badge">{activeProduct.categoryName}</span>
+                <img 
+                  src={activeProduct.image} 
+                  alt={activeProduct.name} 
+                  className="gallery-main-img" 
+                />
+              </div>
+
+              <div className="gallery-thumbnails">
+                <button 
+                  className="thumb-btn active"
+                  aria-label="Product Image View 1"
+                >
+                  <img src={activeProduct.image} alt={activeProduct.name} />
+                </button>
+                <button 
+                  className="thumb-btn"
+                  aria-label="Product Image View 2"
+                >
+                  <img src={activeProduct.image} alt={activeProduct.name} style={{ filter: 'brightness(0.95)' }} />
+                </button>
+              </div>
+
+              <div className="trust-strip-grid">
+                <div className="trust-pill">
+                  <ShieldCheck size={18} color="#0284c7" />
+                  <span>Quality Guarantee</span>
+                </div>
+                <div className="trust-pill">
+                  <Truck size={18} color="#0284c7" />
+                  <span>Prompt Delivery</span>
+                </div>
+                <div className="trust-pill">
+                  <Award size={18} color="#0284c7" />
+                  <span>Authentic Items</span>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: PRODUCT SPECIFICATIONS & ACTIONS */}
+            <div className="product-info-panel">
+              <div className="detail-header-block">
                 <div className="detail-meta-row">
-                  <span className="detail-sku-badge">SKU: {activeProduct.sku}</span>
-                  <span className="detail-stock-badge">
-                    <span className="stock-pulsing-dot"></span>
-                    <span>{activeProduct.availability} ({activeProduct.stockUnits} units ready)</span>
-                  </span>
+                  <span className="sku-tag">SKU: {activeProduct.sku}</span>
+                  <span className="category-pill-tag">{activeProduct.categoryName}</span>
                 </div>
 
                 <h1 className="detail-product-title">{activeProduct.name}</h1>
 
-                <div className="detail-reviews-row">
-                  <div className="star-rating">★★★★★</div>
-                  <span className="rating-score">{activeProduct.rating.toFixed(1)}</span>
-                  <span className="review-count">({activeProduct.reviewCount} customer reviews)</span>
-                </div>
-
-                <div className="detail-price-panel">
-                  <div className="detail-price-row">
-                    <div className="detail-unit-price">
-                      <span className="price-currency">{activeProduct.price}</span>
-                      <span className="price-per">/ unit</span>
-                    </div>
-                    <span className="tax-tag">In Stock Ready to Ship</span>
+                <div className="detail-rating-strip">
+                  <div className="stars-row">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={16} fill="#f59e0b" color="#f59e0b" />
+                    ))}
                   </div>
-                </div>
-
-                <p className="detail-lead-summary">{activeProduct.description}</p>
-
-                {/* Purchase Controls */}
-                <div className="detail-purchase-panel">
-                  <div className="qty-row">
-                    <span className="qty-label">Quantity:</span>
-                    <div className="qty-stepper">
-                      <button 
-                        className="stepper-btn"
-                        onClick={() => setDetailQuantity(Math.max(1, detailQuantity - 1))}
-                        disabled={detailQuantity <= 1}
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <input 
-                        type="text" 
-                        readOnly 
-                        value={detailQuantity} 
-                        className="stepper-input" 
-                      />
-                      <button 
-                        className="stepper-btn"
-                        onClick={() => setDetailQuantity(detailQuantity + 1)}
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                    <div className="subtotal-preview">
-                      Subtotal: <strong>₨ {(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
-                    </div>
-                  </div>
-
-                  <div className="detail-actions-grid">
-                    <button 
-                      className="btn-detail-add-cart"
-                      onClick={() => addToCart(activeProduct, detailQuantity, true)}
-                    >
-                      <ShoppingCart size={18} />
-                      <span>Add to Cart ({detailQuantity})</span>
-                    </button>
-
-                    <a 
-                      className="btn-detail-whatsapp"
-                      href={`https://wa.me/+966537842419?text=${encodeURIComponent(`Hello Zulqarnain Ventures LLC, I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: ₨ ${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <MessageSquare size={18} />
-                      <span>Order via WhatsApp</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="detail-help-strip">
-                  <span>Need assistance or bulk quote?</span>
-                  <a href="https://wa.me/+966537842419" target="_blank" rel="noreferrer" className="help-link">
-                    Chat with Support (+966)
-                  </a>
+                  <span className="rating-score">5.0 / 5.0</span>
+                  <span className="rating-count">({activeProduct.reviewCount || 42} verified customer reviews)</span>
                 </div>
               </div>
-            </div>
 
-            {/* Specifications & Overview Tabs Section below showcase */}
-            <div className="detail-tabs-section">
-              <div className="detail-tabs-header">
+              {/* Price Callout */}
+              <div className="detail-price-panel">
+                <div className="price-main-row">
+                  <span className="price-tag-large">{activeProduct.price}</span>
+                  {activeProduct.originalPrice && (
+                    <span style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '1.2rem', marginLeft: '10px' }}>
+                      {activeProduct.originalPrice}
+                    </span>
+                  )}
+                  <span className="stock-indicator">
+                    <span className="stock-dot"></span>
+                    {activeProduct.availability}
+                  </span>
+                </div>
+                <div className="price-sub-caption">
+                  Standard Packaging: <strong>{activeProduct.packSize}</strong>
+                </div>
+              </div>
+
+              {/* Tabs for Overview / Specs / Reviews */}
+              <div className="detail-tabs-nav">
                 <button 
                   className={`detail-tab-btn ${activeDetailTab === 'description' ? 'active' : ''}`}
                   onClick={() => setActiveDetailTab('description')}
                 >
-                  Product Overview
+                  Description
+                </button>
+                <button 
+                  className={`detail-tab-btn ${activeDetailTab === 'specs' ? 'active' : ''}`}
+                  onClick={() => setActiveDetailTab('specs')}
+                >
+                  Specifications
                 </button>
                 <button 
                   className={`detail-tab-btn ${activeDetailTab === 'features' ? 'active' : ''}`}
@@ -1115,99 +1339,97 @@ export default function App() {
                 >
                   Key Features
                 </button>
-                <button 
-                  className={`detail-tab-btn ${activeDetailTab === 'specs' ? 'active' : ''}`}
-                  onClick={() => setActiveDetailTab('specs')}
-                >
-                  Technical Specifications
-                </button>
               </div>
 
               <div className="detail-tab-content">
                 {activeDetailTab === 'description' && (
-                  <div className="tab-pane">
-                    <h3 className="tab-title">Product Details</h3>
-                    <p className="tab-lead-text">{activeProduct.description}</p>
-                    <p className="tab-lead-text">{activeProduct.longDescription}</p>
-                  </div>
-                )}
-
-                {activeDetailTab === 'features' && (
-                  <div className="tab-pane">
-                    <h3 className="tab-title">Key Features & Benefits</h3>
-                    <div className="tab-features-grid">
-                      {activeProduct.features.map((feat, idx) => (
-                        <div key={idx} className="tab-feature-card">
-                          <Check size={18} color="#1e7087" style={{ marginBottom: '8px' }} />
-                          <p>{feat}</p>
-                        </div>
-                      ))}
-                    </div>
+                  <div>
+                    <p style={{ marginBottom: '14px', lineHeight: 1.6, color: '#334155' }}>
+                      {activeProduct.longDescription || activeProduct.description}
+                    </p>
+                    <p style={{ lineHeight: 1.6, color: '#64748b', fontSize: '0.92rem' }}>
+                      Supplied and inspected by Zaroora LLC under the management of Muhammad Nasir. We maintain stringent stock standards to ensure you receive reliable, high-utility goods for your household and daily routine.
+                    </p>
                   </div>
                 )}
 
                 {activeDetailTab === 'specs' && (
-                  <div className="tab-pane">
-                    <h3 className="tab-title">Technical Specifications</h3>
-                    <table className="specs-table">
-                      <tbody>
-                        {activeProduct.specs.map((item, idx) => (
-                          <tr key={idx}>
-                            <td className="spec-label">{item.label}</td>
-                            <td className="spec-value">{item.value}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="specs-table">
+                    {activeProduct.specs?.map((spec, i) => (
+                      <div key={i} className="spec-row">
+                        <span className="spec-label">{spec.label}</span>
+                        <strong className="spec-value">{spec.value}</strong>
+                      </div>
+                    ))}
+                    <div className="spec-row">
+                      <span className="spec-label">Seller</span>
+                      <strong className="spec-value">Zaroora LLC (Muhammad Nasir)</strong>
+                    </div>
                   </div>
                 )}
-              </div>
-            </div>
 
-            {/* Related Products */}
-            <div className="related-products-section" style={{ marginTop: '60px' }}>
-              <div className="section-header-left">
-                <span className="section-tag">MORE TO DISCOVER</span>
-                <h2 className="related-title">Recommended Everyday Essentials</h2>
+                {activeDetailTab === 'features' && (
+                  <ul className="features-bullet-list">
+                    {activeProduct.features?.map((feat, i) => (
+                      <li key={i}>
+                        <Check size={16} color="#16a34a" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
-              <div className="products-grid">
-                {products.filter(p => p.id !== activeProduct.id).slice(0, 4).map((prod) => (
-                  <div 
-                    key={prod.id} 
-                    className="product-card"
-                    onClick={() => viewProductDetail(prod)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <div className="product-img-wrap">
-                      <span className="product-badge">{prod.categoryName}</span>
-                      <img src={prod.image} alt={prod.name} className="product-img" loading="lazy" />
-                    </div>
-                    <div className="product-body">
-                      <div>
-                        <span className="product-sku">{prod.sku}</span>
-                        <h3 className="product-title">{prod.name}</h3>
-                      </div>
-                      <div>
-                        <div className="product-price-box">
-                          <div className="product-price-val">{prod.price}</div>
-                        </div>
-                        <div className="product-actions-row">
-                          <button 
-                            className="btn-add-cart"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              addToCart(prod, 1, true);
-                            }}
-                          >
-                            <ShoppingCart size={15} />
-                            <span>Add to cart</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+              {/* Quantity selector and Action Buttons */}
+              <div className="detail-cta-box">
+                <div className="quantity-bar-row">
+                  <span className="qty-label">Quantity:</span>
+                  <div className="qty-picker">
+                    <button 
+                      onClick={() => setDetailQuantity(Math.max(1, detailQuantity - 1))}
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span>{detailQuantity}</span>
+                    <button 
+                      onClick={() => setDetailQuantity(detailQuantity + 1)}
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={14} />
+                    </button>
                   </div>
-                ))}
+                  <div className="qty-total-calc">
+                    Total: <strong>₨ {(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
+                  </div>
+                </div>
+
+                <div className="detail-actions-grid">
+                  <button 
+                    className="btn-detail-add-cart"
+                    onClick={() => addToCart(activeProduct, detailQuantity, true)}
+                  >
+                    <ShoppingCart size={18} />
+                    <span>Add to Cart ({detailQuantity})</span>
+                  </button>
+
+                  <a 
+                    className="btn-detail-whatsapp"
+                    href={`https://wa.me/+923246105221?text=${encodeURIComponent(`Hello Zaroora LLC (Muhammad Nasir), I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: ₨ ${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <MessageSquare size={18} />
+                    <span>Order via WhatsApp (+92)</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="detail-help-strip">
+                <span>Need assistance or bulk quote?</span>
+                <a href="https://wa.me/+923246105221" target="_blank" rel="noreferrer" className="help-link">
+                  Chat with Muhammad Nasir (+92 324 6105221)
+                </a>
               </div>
             </div>
 
@@ -1220,8 +1442,8 @@ export default function App() {
         <main className="section-wrapper" style={{ padding: '60px 24px', maxWidth: '1000px', margin: '0 auto' }}>
           <div className="section-header-center">
             <span className="section-tag">GET IN TOUCH</span>
-            <h1 className="section-title">Contact Zulqarnain Ventures LLC</h1>
-            <p className="section-subtitle">We are here to assist with any questions about our products, deliveries, or custom requests.</p>
+            <h1 className="section-title">Contact ZAROORA LLC</h1>
+            <p className="section-subtitle">Owned by Muhammad Nasir. We are here to assist with any questions regarding orders, sourcing, or customer service.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginTop: '40px' }}>
@@ -1229,43 +1451,44 @@ export default function App() {
               <h3 style={{ fontSize: '1.25rem', marginBottom: '20px', color: '#0f172a' }}>Direct Contacts</h3>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <a href="tel:+966537842419" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <a href="tel:+923246105221" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7' }}>
                     <Phone size={20} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Phone Call / Direct</div>
-                    <strong style={{ fontSize: '1.05rem', color: '#0f172a' }}>(+966) 537842419</strong>
+                    <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Phone / Direct Line</div>
+                    <strong style={{ fontSize: '1.05rem', color: '#0f172a' }}>(+92) 324 6105221</strong>
                   </div>
                 </a>
 
-                <a href="mailto:ZULQARNAINY462@GMAIL.COM" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <a href="mailto:info@zaroorallc.com" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7' }}>
                     <Mail size={20} />
                   </div>
                   <div>
                     <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Email Us</div>
-                    <strong style={{ fontSize: '1.05rem', color: '#0f172a' }}>ZULQARNAINY462@GMAIL.COM</strong>
+                    <strong style={{ fontSize: '1.05rem', color: '#0f172a' }}>info@zaroorallc.com</strong>
                   </div>
                 </a>
 
-                <a href="https://wa.me/+966537842419" target="_blank" rel="noreferrer" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <a href="https://wa.me/+923246105221" target="_blank" rel="noreferrer" style={{ display: 'flex', gap: '15px', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a' }}>
                     <MessageSquare size={20} />
                   </div>
                   <div>
                     <div style={{ fontSize: '0.85rem', color: '#64748b' }}>WhatsApp Direct</div>
-                    <strong style={{ fontSize: '1.05rem', color: '#16a34a' }}>(+966) 537842419</strong>
+                    <strong style={{ fontSize: '1.05rem', color: '#16a34a' }}>(+92) 324 6105221</strong>
                   </div>
                 </a>
               </div>
 
               <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '0.95rem', marginBottom: '10px', color: '#0f172a' }}>Connect on Socials</h4>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <h4 style={{ fontSize: '0.95rem', marginBottom: '10px', color: '#0f172a' }}>Official Socials</h4>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                   <a href="https://facebook.com/" target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#f1f5f9', borderRadius: '20px', textDecoration: 'none', color: '#334155', fontSize: '0.88rem', fontWeight: '500' }}>Facebook</a>
                   <a href="https://instagram.com/" target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#f1f5f9', borderRadius: '20px', textDecoration: 'none', color: '#334155', fontSize: '0.88rem', fontWeight: '500' }}>Instagram</a>
                   <a href="https://tiktok.com/" target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#f1f5f9', borderRadius: '20px', textDecoration: 'none', color: '#334155', fontSize: '0.88rem', fontWeight: '500' }}>TikTok</a>
+                  <a href="https://wa.me/+923246105221" target="_blank" rel="noreferrer" style={{ padding: '8px 16px', background: '#dcfce7', borderRadius: '20px', textDecoration: 'none', color: '#16a34a', fontSize: '0.88rem', fontWeight: '600' }}>WhatsApp</a>
                 </div>
               </div>
             </div>
@@ -1283,7 +1506,7 @@ export default function App() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Phone / WhatsApp</label>
-                  <input type="text" placeholder="(+966) 537842419" className="form-input" />
+                  <input type="text" placeholder="(+92) 324 6105221" className="form-input" />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Message *</label>
@@ -1295,7 +1518,7 @@ export default function App() {
               </form>
               {formSubmitted && (
                 <div style={{ marginTop: '16px', padding: '12px', background: '#ecfdf5', color: '#065f46', borderRadius: '8px', fontSize: '0.9rem', textAlign: 'center' }}>
-                  ✓ Thank you! Your message has been sent to Zulqarnain Ventures LLC. We will reply promptly.
+                  ✓ Thank you! Your message has been sent to Zaroora LLC. We will reply promptly.
                 </div>
               )}
             </div>
@@ -1303,19 +1526,20 @@ export default function App() {
         </main>
       )}
 
-      {/* 3. FOOTER AS EXACTLY SPECIFIED BY USER */}
+      {/* 3. FOOTER AS SPECIFIED BY USER */}
       <footer className="site-footer">
         <div className="footer-container">
           <div className="footer-brand">
-            <img src={logoImg} alt="Zulqarnain Ventures LLC Logo" className="footer-logo-img" />
-            <h3>Zulqarnain Ventures LLC</h3>
+            <img src={logoImg} alt="ZAROORA LLC Logo" className="footer-logo-img" />
+            <h3>ZAROORA LLC</h3>
             <p>
-              Zulqarnain Ventures LLC is a modern e-commerce store offering a wide range of quality products for everyday needs. We focus on providing reliable products, competitive prices, and a convenient online shopping experience for our customers.
+              Zaroora LLC is an e-commerce-focused company dedicated to building and managing online businesses with a professional and customer-oriented approach. Owned by Muhammad Nasir.
             </p>
             <div style={{ marginTop: '16px', fontSize: '0.85rem', color: '#cbd5e1' }}>
-              <div><strong>Direct Contacts:</strong> ZULQARNAINY462@GMAIL.COM</div>
-              <div><strong>Phone Hotline:</strong> (+966) 537842419</div>
-              <div><strong>WhatsApp Support:</strong> (+966) 537842419</div>
+              <div><strong>Owner:</strong> Muhammad Nasir</div>
+              <div><strong>Email:</strong> info@zaroorallc.com</div>
+              <div><strong>Phone:</strong> (+92) 324 6105221</div>
+              <div><strong>WhatsApp:</strong> (+92) 324 6105221</div>
             </div>
           </div>
 
@@ -1323,14 +1547,12 @@ export default function App() {
             <h4>Menu</h4>
             <ul>
               <li><a href="#main-content" onClick={(e) => { e.preventDefault(); setSelectedCategory('all'); navigateTo('home'); }}>Home</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); setSelectedCategory('all'); navigateTo('home'); }}>Shop</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'home-and-kitchen'); }}>Home And Kitchen</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'office-products'); }}>Office Products</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'pet-supplies'); }}>Pet Supplies</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'sports-and-outdoors'); }}>Sports And Outdoors</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'tools-and-home-improvement'); }}>Tools And Home Improvement</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'automotive'); }}>Automotive</a></li>
-              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('home', 'baby-products'); }}>Baby Products</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); setSelectedCategory('all'); navigateTo('shop'); }}>Shop</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('categories'); }}>Categories</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('about'); }}>About Us</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); navigateTo('contact'); }}>Contact Us</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); setModalType('account'); }}>My Account</a></li>
+              <li><a href="#main-content" onClick={(e) => { e.preventDefault(); setCartOpen(true); }}>Cart ({totalCartItems})</a></li>
             </ul>
           </div>
 
@@ -1338,13 +1560,13 @@ export default function App() {
             <h4>Contacts</h4>
             <ul style={{ marginBottom: '20px' }}>
               <li>
-                <a href="mailto:ZULQARNAINY462@GMAIL.COM">
-                  ZULQARNAINY462@GMAIL.COM
+                <a href="mailto:info@zaroorallc.com">
+                  info@zaroorallc.com
                 </a>
               </li>
               <li>
-                <a href="tel:+966537842419">
-                  (+966) 537842419
+                <a href="tel:+923246105221">
+                  (+92) 324 6105221
                 </a>
               </li>
             </ul>
@@ -1354,14 +1576,14 @@ export default function App() {
               <li><a href="https://facebook.com/" target="_blank" rel="noreferrer">Facebook</a></li>
               <li><a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a></li>
               <li><a href="https://tiktok.com/" target="_blank" rel="noreferrer">TikTok</a></li>
-              <li><a href="https://wa.me/+966537842419" target="_blank" rel="noreferrer" style={{ color: '#4ade80' }}>WhatsApp</a></li>
+              <li><a href="https://wa.me/+923246105221" target="_blank" rel="noreferrer" style={{ color: '#4ade80' }}>WhatsApp</a></li>
             </ul>
           </div>
 
           <div className="footer-col">
             <h4>Subscribe to our newsletter</h4>
             <p style={{ fontSize: '0.85rem', marginBottom: '14px', color: '#cbd5e1' }}>
-              Stay updated with our latest arrivals, exclusive seasonal promotions, and everyday savings.
+              Stay updated with our latest arrivals, exclusive savings, and everyday essentials.
             </p>
             <form onSubmit={handleNewsletterSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Email *</label>
@@ -1408,10 +1630,10 @@ export default function App() {
 
         <div className="footer-bottom">
           <div>
-            © 2026 <strong>Zulqarnain ventures llc</strong>. All rights reserved.
+            © 2026 <strong>zaroora llc</strong>. All rights reserved.
           </div>
           <div style={{ color: '#94a3b8' }}>
-            Zulqarnain Ventures LLC • Modern E-Commerce Store
+            Owned by Muhammad Nasir • Modern E-Commerce Solutions
           </div>
         </div>
       </footer>
@@ -1420,103 +1642,75 @@ export default function App() {
       {cartOpen && (
         <div className="cart-backdrop" onClick={() => setCartOpen(false)}>
           <div className="cart-drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="cart-drawer-header">
-              <div className="cart-header-title">
+            <div className="cart-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <ShoppingBag size={20} color="#1e7087" />
-                <h3>Your Shopping Cart</h3>
-                <span className="cart-count-pill">{totalCartItems} items</span>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#0f172a' }}>Shopping Cart</h3>
+                <span className="cart-header-count">{totalCartItems}</span>
               </div>
               <button className="cart-close-btn" onClick={() => setCartOpen(false)}>
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
-            <div className="cart-drawer-body">
+            <div className="cart-items-list">
               {cart.length === 0 ? (
                 <div className="cart-empty-state">
-                  <div className="empty-cart-icon">
-                    <ShoppingCart size={48} strokeWidth={1.5} color="#94a3b8" />
-                  </div>
-                  <h4>Your shopping cart is empty</h4>
-                  <p>Explore our wide collection of everyday essentials and discover high quality items at great prices.</p>
+                  <ShoppingCart size={48} color="#94a3b8" />
+                  <h4>Your cart is empty</h4>
+                  <p>Explore our practical essentials and add items to your cart.</p>
                   <button 
-                    className="btn-hero-primary" 
-                    style={{ marginTop: '16px' }}
+                    className="btn-empty-shop"
                     onClick={() => {
                       setCartOpen(false);
-                      setSelectedCategory('all');
-                      navigateTo('home');
-                      setTimeout(() => {
-                        const el = document.getElementById('featured-products-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 50);
+                      navigateTo('shop');
                     }}
                   >
-                    Return to shop
+                    Start Shopping
                   </button>
                 </div>
               ) : (
-                <div className="cart-items-list">
-                  {cart.map((item) => (
-                    <div key={item.product.id} className="cart-item-card">
-                      <img 
-                        src={item.product.image} 
-                        alt={item.product.name} 
-                        className="cart-item-thumb"
-                        onClick={() => {
-                          viewProductDetail(item.product);
-                          setCartOpen(false);
-                        }}
-                      />
-                      <div className="cart-item-details">
-                        <div className="cart-item-meta">
-                          <span className="cart-item-sku">SKU: {item.product.sku}</span>
-                          <button 
-                            className="btn-remove-item"
-                            onClick={() => removeFromCart(item.product.id)}
-                            title="Remove item"
-                          >
-                            <Trash2 size={15} />
+                cart.map(item => (
+                  <div key={item.product.id} className="cart-item-row">
+                    <img 
+                      src={item.product.image} 
+                      alt={item.product.name} 
+                      className="cart-item-thumb" 
+                    />
+                    <div className="cart-item-info">
+                      <div className="cart-item-name">{item.product.name}</div>
+                      <div className="cart-item-sku">SKU: {item.product.sku}</div>
+                      <div className="cart-item-price-unit">{item.product.price} each</div>
+                      
+                      <div className="cart-item-bottom">
+                        <div className="cart-qty-ctrl">
+                          <button onClick={() => updateCartQuantity(item.product.id, -1)} aria-label="Decrease">
+                            <Minus size={12} />
+                          </button>
+                          <span>{item.quantity}</span>
+                          <button onClick={() => updateCartQuantity(item.product.id, 1)} aria-label="Increase">
+                            <Plus size={12} />
                           </button>
                         </div>
-                        <h4 
-                          className="cart-item-title"
-                          onClick={() => {
-                            viewProductDetail(item.product);
-                            setCartOpen(false);
-                          }}
-                        >
-                          {item.product.name}
-                        </h4>
-                        <div className="cart-item-bottom">
-                          <div className="cart-qty-controls">
-                            <button 
-                              className="qty-btn"
-                              onClick={() => updateCartQuantity(item.product.id, -1)}
-                            >
-                              <Minus size={12} />
-                            </button>
-                            <span className="cart-qty-val">{item.quantity}</span>
-                            <button 
-                              className="qty-btn"
-                              onClick={() => updateCartQuantity(item.product.id, 1)}
-                            >
-                              <Plus size={12} />
-                            </button>
-                          </div>
-                          <div className="cart-item-price">
-                            ₨ {(item.product.priceNumeric * item.quantity).toLocaleString()}
-                          </div>
+                        <div className="cart-item-total">
+                          ₨ {(item.product.priceNumeric * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <button 
+                      className="btn-remove-cart-item"
+                      onClick={() => removeFromCart(item.product.id)}
+                      title="Remove item"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))
               )}
             </div>
 
             {cart.length > 0 && (
-              <div className="cart-drawer-footer">
+              <div className="cart-footer">
                 <div className="cart-summary-box">
                   <div className="cart-summary-line">
                     <span>Items Count</span>
@@ -1531,17 +1725,17 @@ export default function App() {
                 <div className="cart-checkout-actions">
                   <a 
                     className="btn-checkout-wa"
-                    href={`https://wa.me/+966537842419?text=${encodeURIComponent(
-                      `Hello Zulqarnain Ventures LLC, I want to place an order:\n\n` +
+                    href={`https://wa.me/+923246105221?text=${encodeURIComponent(
+                      `Hello Zaroora LLC (Muhammad Nasir), I want to place an order:\n\n` +
                       cart.map(i => `• ${i.quantity}x ${i.product.name} (SKU: ${i.product.sku}) - ₨ ${(i.product.priceNumeric * i.quantity).toLocaleString()}`).join('\n') +
-                      `\n\nTotal Order Value: ₨ ${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and payment details.`
+                      `\n\nTotal Order Value: ₨ ${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and delivery details.`
                     )}`}
                     target="_blank"
                     rel="noreferrer"
                     style={{ textDecoration: 'none' }}
                   >
                     <MessageSquare size={18} />
-                    <span>Order via WhatsApp (+966)</span>
+                    <span>Order via WhatsApp (+92)</span>
                   </a>
 
                   <button 
@@ -1580,46 +1774,80 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL WINDOW */}
-      {modalType && (
+      {/* MODAL WINDOW FOR ACCOUNT */}
+      {modalType === 'account' && (
         <div className="modal-backdrop" onClick={closeModal}>
-          <div className="modal-window" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-window" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
             <div className="modal-header">
-              <h3>Contact Zulqarnain Ventures LLC</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <User size={20} color="#1e7087" />
+                <h3 style={{ margin: 0 }}>My Account</h3>
+              </div>
               <button className="modal-close-btn" onClick={closeModal}>
                 <X size={18} />
               </button>
             </div>
             <div className="modal-body">
-              <p style={{ marginBottom: '18px', color: '#475569', fontSize: '0.9rem' }}>
-                Reach out to our team directly. You can also contact us via phone/WhatsApp at (+966) 537842419 or email ZULQARNAINY462@GMAIL.COM.
-              </p>
-              <form onSubmit={handleFormSubmit}>
-                <div className="form-group">
-                  <label className="form-label">Full Name *</label>
-                  <input type="text" required placeholder="Your Name" className="form-input" />
+              <div style={{ textAlign: 'center', padding: '16px 0 24px' }}>
+                <div style={{
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '50%',
+                  background: '#e0f2fe',
+                  color: '#0284c7',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '12px'
+                }}>
+                  <UserCheck size={32} />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Email Address *</label>
-                  <input type="email" required placeholder="you@domain.com" className="form-input" />
+                <h4 style={{ margin: '0 0 4px', fontSize: '1.15rem', color: '#0f172a' }}>Welcome to Zaroora LLC</h4>
+                <p style={{ margin: 0, fontSize: '0.88rem', color: '#64748b' }}>Track orders, manage favorites, and contact support</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+                <div style={{ padding: '14px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Package size={18} color="#1e7087" />
+                    <span style={{ fontSize: '0.92rem', fontWeight: '500' }}>Active Orders in Cart</span>
+                  </div>
+                  <strong style={{ color: '#1e7087' }}>{totalCartItems} items</strong>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Phone / WhatsApp</label>
-                  <input type="text" placeholder="(+966) 537842419" className="form-input" />
+
+                <div style={{ padding: '14px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Clock size={18} color="#1e7087" />
+                    <span style={{ fontSize: '0.92rem', fontWeight: '500' }}>Direct Support Line</span>
+                  </div>
+                  <span style={{ fontSize: '0.88rem', color: '#0f172a', fontWeight: '600' }}>(+92) 324 6105221</span>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Message *</label>
-                  <textarea rows={3} required placeholder="How can we assist you today?" className="form-textarea"></textarea>
-                </div>
-                <button type="submit" className="btn-submit-modal" style={{ width: '100%' }}>
-                  Submit Inquiry
-                </button>
-              </form>
-              {formSubmitted && (
-                <div style={{ marginTop: '14px', padding: '10px', background: '#ecfdf5', color: '#065f46', borderRadius: '8px', fontSize: '0.88rem', textAlign: 'center' }}>
-                  ✓ Message received! We will get in touch shortly.
-                </div>
-              )}
+              </div>
+
+              <a 
+                href="https://wa.me/+923246105221" 
+                target="_blank" 
+                rel="noreferrer"
+                className="btn-submit-modal"
+                style={{ textAlign: 'center', display: 'block', textDecoration: 'none', marginBottom: '10px' }}
+              >
+                Chat on WhatsApp Support
+              </a>
+              <button 
+                onClick={closeModal}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  background: '#f1f5f9',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: '#475569',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

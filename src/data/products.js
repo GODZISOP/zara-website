@@ -1,226 +1,211 @@
+export const categoryBanners = [
+  {
+    id: 'everything-in-one-place',
+    tag: 'Everyday Essentials',
+    title: 'Everything In One Place',
+    description: 'Practical essentials for every room, routine, and household.',
+    buttonText: 'Shop Home',
+    categoryId: 'home-and-kitchen',
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    id: 'home-essentials',
+    tag: 'Home Essentials',
+    title: 'Family Care & Wellness',
+    description: 'Helpful products for family care, wellness, and everyday comfort.',
+    buttonText: 'Shop Care',
+    categoryId: 'beauty-and-personal-care',
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    id: 'everyday-care',
+    tag: 'Everyday Care',
+    title: 'Hobbies, Pets & Active Life',
+    description: 'Gear, tools, and supplies for hobbies, pets, and active days.',
+    buttonText: 'Browse More',
+    categoryId: 'sports-pets-outdoors',
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80'
+  }
+];
+
 export const categories = [
   {
+    id: 'tools-and-office-supplies',
+    name: 'Tools & Office Supplies',
+    tagline: 'Precision tools & modern workspace supplies',
+    description: 'Durable hardware, smart stationery, and organization tools for home, office, and workshop.',
+    buttonText: 'Explore Tools',
+    image: 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=800&q=80',
+    itemCount: '12+ Items'
+  },
+  {
+    id: 'sports-pets-outdoors',
+    name: 'Sports, Pets & Outdoors',
+    tagline: 'Active gear, fitness & pet comfort essentials',
+    description: 'High-performance fitness gear, premium pet bedding, toys, and outdoor adventure gear.',
+    buttonText: 'Shop Outdoors',
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
+    itemCount: '18+ Items'
+  },
+  {
+    id: 'beauty-and-personal-care',
+    name: 'Beauty & Personal Care',
+    tagline: 'Wellness, skincare & self-care essentials',
+    description: 'Daily grooming, soothing skincare, wellness solutions, and natural hygiene essentials.',
+    buttonText: 'Browse Care',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+    itemCount: '15+ Items'
+  },
+  {
     id: 'home-and-kitchen',
-    name: 'Home And Kitchen',
-    description: 'Smart finds for cooking, organizing, and comfortable living.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'health-and-household',
-    name: 'Health & Household',
-    description: 'Everyday essentials for a healthier, happier home.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'office-products',
-    name: 'Office Products',
-    description: 'Straightforward office supplies for desks, workspaces, and organization.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'pet-supplies',
-    name: 'Pet Supplies',
-    description: 'Comfort and care essentials for pets of all sizes.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'sports-and-outdoors',
-    name: 'Sports And Outdoors',
-    description: 'High-performance fitness gear and outdoor activity essentials.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'tools-and-home-improvement',
-    name: 'Tools And Home Improvement',
-    description: 'Essential tools and hardware for upgrades and home repairs.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'automotive',
-    name: 'Automotive',
-    description: 'Vehicle care, accessories, and maintenance solutions.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 'baby-products',
-    name: 'Baby Products',
-    description: 'Gentle, safe, and reliable essentials for babies and toddlers.',
-    buttonText: 'Shop',
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80'
+    name: 'Home & Kitchen',
+    tagline: 'Everyday cookware, dining & home comfort',
+    description: 'Practical kitchenware, dining accessories, cookware, and smart home organizing solutions.',
+    buttonText: 'Shop Kitchen',
+    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    itemCount: '24+ Items'
   }
 ];
 
 export const products = [
   {
     id: 1,
-    name: 'Adjustable Resistance Bands',
-    category: 'sports-and-outdoors',
-    categoryName: 'Sports And Outdoors',
-    sku: 'ZV-ARB-020',
-    price: '₨ 19',
-    priceNumeric: 19,
-    packSize: 'Standard Resistance Set with Door Anchor & Handles',
+    name: 'Tools & Office Supplies Set',
+    shortTitle: 'Tools & Office Supplies',
+    category: 'tools-and-office-supplies',
+    categoryName: 'Tools & Office Supplies',
+    sku: 'ZR-TOS-021',
+    price: '₨ 40',
+    priceNumeric: 40,
+    originalPrice: '₨ 55',
+    packSize: 'Multi-Piece Workspace Precision Kit',
     availability: 'In Stock (Ready to Ship)',
-    stockUnits: 850,
+    stockUnits: 450,
     minOrder: '1 Unit',
     rating: 5.0,
-    popularity: 98,
-    reviewCount: 48,
-    priceNote: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=800&q=80',
-    description: 'Stackable high-durability resistance bands designed for strength workouts, muscle toning, rehabilitation, and home fitness routines.',
-    longDescription: 'Engineered from premium layered natural latex, this adjustable resistance band system offers variable resistance levels suitable for beginners and seasoned athletes alike. Complete with reinforced carabiners, non-slip handles, ankle straps, and protective travel carry pouch.',
+    popularity: 99,
+    reviewCount: 46,
+    badge: 'Popular',
+    image: 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=800&q=80',
+    description: 'Practical essential workspace kit featuring ergonomic hand tools, precision measurement instruments, and desktop organizing accessories.',
+    longDescription: 'Curated specifically for home offices, creative studios, and light household repairs. This Tools & Office Supplies bundle combines durable forged carbon-steel hand tools with modern desk organization equipment. Built to last with anti-corrosion matte finish and non-slip rubber grips.',
     features: [
-      'Multi-level progressive resistance stackable up to full workout load',
-      'Anti-snap heavy-duty layered latex tubes for maximum workout safety',
-      'Cushioned foam ergonomic grip handles with heavy gauge steel hooks',
-      'Includes door anchor and adjustable ankle straps for full-body workouts',
-      'Lightweight and compact for travel, home gym, and outdoor training'
+      'Industrial-grade forged alloy steel with corrosion-resistant finish',
+      'Dual-purpose tools designed for household tasks and office setups',
+      'Compact organized storage tray keeps desks and drawers clutter-free',
+      'Ergonomic shock-absorbing grips for comfortable long-duration use',
+      'Backed by Zaroora LLC standard quality inspection guarantee'
     ],
     specs: [
-      { label: 'Set Contents', value: '5 Color-coded Resistance Bands, 2 Handles, 2 Ankle Straps, 1 Door Anchor' },
-      { label: 'Material', value: '100% Natural Elastic Latex & High-Tensile Steel' },
-      { label: 'Weight', value: '0.95 kg total pack' },
-      { label: 'Packaging', value: 'Waterproof Zipper Storage Case & Retail Box' }
+      { label: 'Set Includes', value: 'Precision Driver Set, Measuring Tape, Heavy Utility Knife, Desk Organizer Tray' },
+      { label: 'Material', value: 'High-Carbon Steel, ABS Polymer & Alloy' },
+      { label: 'Suitability', value: 'Home, Office, Crafting & Repairs' },
+      { label: 'Warranty', value: '1 Year Quality Guarantee' }
     ]
   },
   {
     id: 2,
-    name: 'Citrus Surface Cleaner',
-    category: 'health-and-household',
-    categoryName: 'Health & Household',
-    sku: 'ZV-CSC-015',
-    price: '₨ 13',
-    priceNumeric: 13,
-    packSize: '500ml Spray Bottle',
+    name: 'Sports, Pets & Outdoors Gear',
+    shortTitle: 'Sports, Pets & Outdoors',
+    category: 'sports-pets-outdoors',
+    categoryName: 'Sports, Pets & Outdoors',
+    sku: 'ZR-SPO-019',
+    price: '₨ 28',
+    priceNumeric: 28,
+    originalPrice: '₨ 38',
+    packSize: 'Active Lifestyle & Pet Care Pack',
     availability: 'In Stock (Ready to Ship)',
-    stockUnits: 920,
+    stockUnits: 620,
     minOrder: '1 Unit',
     rating: 4.9,
-    popularity: 91,
-    reviewCount: 36,
-    priceNote: 'Everyday Essential',
-    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=800&q=80',
-    description: 'All-purpose plant-based citrus surface cleaner cutting through grease, grime, and food residue on countertops, glass, and tiles.',
-    longDescription: 'Specially formulated with natural citrus extracts and biodegradable cleansing agents, Citrus Surface Cleaner leaves behind a refreshing natural scent without any toxic residue. Safe for kitchen islands, dining tables, bathrooms, and high-touch everyday surfaces.',
+    popularity: 96,
+    reviewCount: 52,
+    badge: 'Trending',
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
+    description: 'Multi-activity gear built for outdoor adventures, fitness training routines, and daily pet comfort.',
+    longDescription: 'Whether taking your canine companion for an evening hike or maintaining your personal fitness regimen, this versatile outdoor and pet pack delivers resilience and high utility. Features weatherproof fabrics, heavy-duty clips, and versatile fitness attachments.',
     features: [
-      'Formulated with cold-pressed natural citrus peel oil',
-      'Powerful multi-surface degreaser and grime remover',
-      'Streak-free shine on quartz, granite, ceramic, and glass',
-      'Cruelty-free, phosphate-free, and biodegradable formula',
-      'Ergonomic precision spray nozzle with mist and stream settings'
+      'Weather-resistant 600D ripstop nylon construction',
+      'High-elasticity training resistance loops with reinforced webbing',
+      'Pet care harness & quick-release reflective safety leash',
+      'Lightweight and packable into any travel duffle or backpack',
+      'Tested for active outdoor performance under demanding conditions'
     ],
     specs: [
-      { label: 'Volume', value: '500 ml (16.9 fl oz)' },
-      { label: 'Scent', value: 'Zesty Citrus Mandarin & Sweet Orange' },
-      { label: 'Safety', value: 'Non-toxic, Food-contact surface safe' },
-      { label: 'Bottle Type', value: 'Recyclable PET Spray' }
+      { label: 'Primary Use', value: 'Outdoor Fitness, Trail Walking & Pet Travel' },
+      { label: 'Material', value: 'Ripstop Oxford Nylon, Steel Carabiners & Latex' },
+      { label: 'Weight', value: '0.8 kg' },
+      { label: 'Care', value: 'Wipe Clean / Hand Washable' }
     ]
   },
   {
     id: 3,
-    name: 'Cloud Comfort Pet Bed',
-    category: 'pet-supplies',
-    categoryName: 'Pet Supplies',
-    sku: 'ZV-CCP-018',
-    price: '₨ 40',
-    priceNumeric: 40,
-    packSize: 'Deluxe Cozy Donut Cushion (Medium / Large)',
+    name: 'Beauty & Personal Care Routine',
+    shortTitle: 'Beauty & Personal Care',
+    category: 'beauty-and-personal-care',
+    categoryName: 'Beauty & Personal Care',
+    sku: 'ZR-BPC-017',
+    price: '₨ 18',
+    priceNumeric: 18,
+    originalPrice: '₨ 25',
+    packSize: 'Daily Wellness & Grooming Set',
     availability: 'In Stock (Ready to Ship)',
-    stockUnits: 620,
+    stockUnits: 880,
     minOrder: '1 Unit',
     rating: 5.0,
-    popularity: 96,
-    reviewCount: 52,
-    priceNote: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?auto=format&fit=crop&w=800&q=80',
-    description: 'Ultra-soft calming round pet bed with high-loft plush fleece and orthopedic bolster edge for restful sleep.',
-    longDescription: 'Created to alleviate joint stiffness and anxiety, the Cloud Comfort Pet Bed features an ergonomic raised rim that delivers head and neck support, while the ultra-soft faux fur lining offers warmth and security. Fully machine washable with a water-resistant, non-skid bottom.',
+    popularity: 98,
+    reviewCount: 68,
+    badge: 'Best Seller',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+    description: 'Gentle, nourishing personal care essentials formulated for daily skin comfort, hair vitality, and hygiene.',
+    longDescription: 'Designed for daily self-care routines, this Beauty & Personal Care collection brings spa-grade hydration and clean ingredients into your home. Paraben-free, sulfate-free, and suitable for all sensitive skin types, delivering all-day freshness and softness.',
     features: [
-      'Orthopedic raised edge creates a cozy nest feeling for anxiety relief',
-      'Dense supportive polypropylene cotton filler retains bounce and shape',
-      'Non-slip water and dirt-resistant silicone-beaded base prevents sliding',
-      'Machine washable and dryer safe on gentle cycle for easy maintenance',
-      'Safe, non-toxic pet-friendly textile materials'
+      'Enriched with botanical plant extracts and vitamins E & B5',
+      '100% cruelty-free, hypoallergenic, and dermatologist tested',
+      'Non-greasy, fast-absorbing texture for effortless daily use',
+      'Subtle refreshing natural fragrance derived from plant oils',
+      'Eco-friendly recyclable pumps and amber bottles'
     ],
     specs: [
-      { label: 'Dimensions', value: '60 cm x 60 cm x 18 cm (Medium / Universal)' },
-      { label: 'Outer Shell', value: 'Ultra-Soft Faux Fur Shag Plush' },
-      { label: 'Inner Filling', value: 'High-Resilience Breathable Virgin PP Cotton' },
-      { label: 'Bottom', value: 'Waterproof 300D Oxford with Silicone Grip Dots' }
+      { label: 'Skin Type', value: 'All Skin Types (Sensitive Safe)' },
+      { label: 'Volume', value: 'Set of 3 x 200ml Bottles' },
+      { label: 'Key Ingredients', value: 'Aloe Vera, Jojoba Oil, Vitamin E, Shea Butter' },
+      { label: 'Certification', value: 'Cruelty-Free & Dermatologist Approved' }
     ]
   },
   {
     id: 4,
-    name: 'Essential Desk Organizer Set',
-    category: 'office-products',
-    categoryName: 'Office Products',
-    sku: 'ZV-EDO-016',
-    price: '₨ 25',
-    priceNumeric: 25,
-    packSize: 'Multi-Compartment Mesh Desk Caddy with Pen Holders',
-    availability: 'In Stock (Ready to Ship)',
-    stockUnits: 940,
-    minOrder: '1 Unit',
-    rating: 4.9,
-    popularity: 94,
-    reviewCount: 39,
-    priceNote: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=800&q=80',
-    description: 'Sleek multi-compartment metal mesh desktop organizer designed for pens, documents, notepads, and office supplies.',
-    longDescription: 'Declutter your workspace with the Essential Desk Organizer Set. Constructed from durable, anti-scratch powder-coated steel mesh with reinforced borders and non-scratch protective rubber footings. Features multiple partitioned tiers to keep desk essentials sorted and accessible.',
-    features: [
-      'Multi-tiered layout with slide-out drawer and dedicated pen slots',
-      'Rust-resistant electroplated powder-coated black wire mesh',
-      'Anti-scratch padded base prevents marks on wood and glass surfaces',
-      'Smooth edges and polished contours for effortless everyday handling',
-      'Instant ready-to-use setup with no assembly required'
-    ],
-    specs: [
-      { label: 'Dimensions', value: '22 cm x 14 cm x 13 cm' },
-      { label: 'Material', value: 'Powder-Coated Reinforced Steel Wire Mesh' },
-      { label: 'Compartments', value: '6 Divided Sections + 1 Sliding Drawer' },
-      { label: 'Finish', value: 'Matte Scratch-Resistant Black' }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Everyday Nonstick Cookware Set',
+    name: 'Home & Kitchen Essentials Set',
+    shortTitle: 'Home & Kitchen',
     category: 'home-and-kitchen',
-    categoryName: 'Home And Kitchen',
-    sku: 'ZV-ENC-014',
-    price: '₨ 70',
-    priceNumeric: 70,
-    packSize: 'Multi-Piece Nonstick Cookware with Tempered Glass Lids',
+    categoryName: 'Home & Kitchen',
+    sku: 'ZR-HAK-015',
+    price: '₨ 33',
+    priceNumeric: 33,
+    originalPrice: '₨ 45',
+    packSize: 'Complete Daily Kitchenware Suite',
     availability: 'In Stock (Ready to Ship)',
     stockUnits: 510,
     minOrder: '1 Unit',
-    rating: 5.0,
-    popularity: 99,
-    reviewCount: 64,
-    priceNote: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80',
-    description: 'Premium granite nonstick cookware set with even-heat aluminum core and ergonomic heat-resistant handles.',
-    longDescription: 'Crafted for daily home cooking and effortless cleanup, this Nonstick Cookware Set features multi-layer ceramic granite coating 100% free of PFOA, lead, and cadmium. Suitable for gas, electric, ceramic, and induction cooktops.',
+    rating: 4.9,
+    popularity: 97,
+    reviewCount: 74,
+    badge: 'Top Pick',
+    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    description: 'Essential kitchenware and meal prep accessories designed for seamless cooking, dining, and food storage.',
+    longDescription: 'Elevate your culinary workspace with this comprehensive Home & Kitchen set. Built from food-grade stainless steel and heat-resistant silicone, each utensil and vessel is crafted to withstand high temperatures without warping, scratching, or retaining odors.',
     features: [
-      'Superior 5-layer nonstick granite surface for oil-minimal cooking',
-      'Die-cast aluminum core delivers uniform heat without hot spots',
-      'Bakelite stay-cool woodgrain handles for safe, comfortable grip',
-      'Steam-vented shatter-resistant tempered glass lids',
-      'Compatible with all stovetops including magnetic induction'
+      'Food-grade BPA-free silicone with heat tolerance up to 230°C (450°F)',
+      'Smooth brushed stainless steel handles with hanging loops',
+      'Non-stick pan safe — protects expensive nonstick cookware surfaces',
+      'Dishwasher safe for rapid, hygienic post-dinner cleanups',
+      'Modern neutral design complements every kitchen aesthetic'
     ],
     specs: [
-      { label: 'Set Includes', value: 'Frying Pan, Saucepan with Lid, Casserole Pot with Lid' },
-      { label: 'Coating', value: 'PFOA-Free Multi-Layer Granite Nonstick' },
-      { label: 'Base', value: 'Induction Magnetized Stainless Steel Bottom' },
-      { label: 'Cleaning', value: 'Dishwasher Safe / Hand Wash Recommended' }
+      { label: 'Package Includes', value: 'Turner, Ladle, Whisk, Tongs, Slotted Spoon & Counter Caddy' },
+      { label: 'Material', value: 'BPA-Free Food-Grade Silicone & 304 Stainless Steel' },
+      { label: 'Heat Resistance', value: 'Up to 230°C / 446°F' },
+      { label: 'Dishwasher Safe', value: 'Yes' }
     ]
   }
 ];
