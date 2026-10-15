@@ -708,7 +708,7 @@ export default function App() {
                     ))}
                   </div>
                   <p style={{ fontSize: '1.05rem', color: '#1e293b', fontStyle: 'italic', lineHeight: 1.6 }}>
-                    “Zaroora LLC offers genuine convenience. Great pricing in ₨ and responsive customer service on WhatsApp.”
+                    “Zaroora LLC offers genuine convenience. Great pricing in USD ($) and responsive customer service on WhatsApp.”
                   </p>
                 </div>
                 <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1263,7 +1263,7 @@ export default function App() {
                     </button>
                   </div>
                   <div className="qty-total-calc">
-                    Total: <strong>₨ {(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
+                    Total: <strong>${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
                   </div>
                 </div>
 
@@ -1278,7 +1278,7 @@ export default function App() {
 
                   <a 
                     className="btn-detail-whatsapp"
-                    href={`https://wa.me/+923246105221?text=${encodeURIComponent(`Hello Zaroora LLC (Muhammad Nasir), I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: ₨ ${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
+                    href={`https://wa.me/+923246105221?text=${encodeURIComponent(`Hello Zaroora LLC (Muhammad Nasir), I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: $${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -1556,7 +1556,7 @@ export default function App() {
                           </button>
                         </div>
                         <div className="cart-item-total">
-                          ₨ {(item.product.priceNumeric * item.quantity).toLocaleString()}
+                          ${(item.product.priceNumeric * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     </div>
@@ -1581,7 +1581,7 @@ export default function App() {
                   </div>
                   <div className="cart-summary-line cart-summary-total">
                     <span>Subtotal</span>
-                    <span>₨ {cartSubtotal.toLocaleString()}</span>
+                    <span>${cartSubtotal.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -1590,8 +1590,8 @@ export default function App() {
                     className="btn-checkout-wa"
                     href={`https://wa.me/+923246105221?text=${encodeURIComponent(
                       `Hello Zaroora LLC (Muhammad Nasir), I want to place an order:\n\n` +
-                      cart.map(i => `• ${i.quantity}x ${i.product.name} (SKU: ${i.product.sku}) - ₨ ${(i.product.priceNumeric * i.quantity).toLocaleString()}`).join('\n') +
-                      `\n\nTotal Order Value: ₨ ${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and delivery details.`
+                      cart.map(i => `• ${i.quantity}x ${i.product.name} (SKU: ${i.product.sku}) - $${(i.product.priceNumeric * i.quantity).toLocaleString()}`).join('\n') +
+                      `\n\nTotal Order Value: $${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and delivery details.`
                     )}`}
                     target="_blank"
                     rel="noreferrer"
