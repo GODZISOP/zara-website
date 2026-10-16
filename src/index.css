@@ -2679,3 +2679,122 @@ body {
   }
 }
 
+
+/* ==========================================================================
+   COMPLETE MOBILE RESPONSIVE OPTIMIZATIONS (PHONE & TABLET)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .desktop-nav, .nav-links {
+    display: none !important;
+  }
+  .mobile-toggle-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    justify-content: center;
+    text-align: center;
+  }
+  .top-bar-contact {
+    display: none !important;
+  }
+  .main-nav {
+    padding: 10px 16px !important;
+  }
+  .brand-logo-img {
+    height: 42px !important;
+  }
+  .brand-title {
+    font-size: 1.15rem !important;
+  }
+  .brand-subtitle {
+    font-size: 0.65rem !important;
+  }
+  .btn-nav-partner, .nav-actions a[href*="whatsapp"], .nav-actions a[href*="wa.me"] {
+    display: none !important;
+  }
+  .hero-section {
+    min-height: auto !important;
+    padding: 40px 16px !important;
+  }
+  .hero-title {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  .hero-description {
+    font-size: 0.9rem !important;
+  }
+  .hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .hero-actions button, .hero-actions a {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .categories-grid, .categories-grid-four, .products-grid, .featured-grid-four {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .category-card {
+    height: auto !important;
+    min-height: 220px !important;
+  }
+  .footer-container {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-nav {
+    padding: 8px 12px !important;
+  }
+  .nav-brand {
+    gap: 8px !important;
+  }
+  .brand-logo-img {
+    height: 36px !important;
+  }
+  .brand-title {
+    font-size: 1.05rem !important;
+  }
+  .brand-subtitle {
+    display: none !important;
+  }
+  .nav-actions {
+    gap: 8px !important;
+  }
+  .nav-cart-text {
+    display: none !important;
+  }
+  .btn-nav-cart {
+    padding: 7px 12px !important;
+    font-size: 0.82rem !important;
+  }
+  .products-blue-bar, .blue-bar-categories {
+    padding: 4px 8px !important;
+    gap: 5px !important;
+  }
+  .blue-cat-btn, .all-cat-btn {
+    padding: 4px 10px !important;
+    font-size: 0.78rem !important;
+  }
+  .section-heading-clean {
+    font-size: 1.45rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid, .categories-grid-four, .products-grid, .featured-grid-four {
+    grid-template-columns: 1fr !important;
+  }
+}
