@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Phone, Mail, MapPin, Search, ArrowRight, CheckCircle2, 
   Send, ExternalLink, ShieldCheck, Truck, Award,
@@ -173,37 +173,6 @@ export default function App() {
       >
         Skip to content
       </a>
-
-      {/* 1. TOP ANNOUNCEMENT BAR */}
-      <div className="top-bar">
-        <div className="top-bar-item">
-          <span>Official Store: <strong>ZAROORA LLC</strong></span>
-          <span style={{ opacity: 0.5, margin: '0 6px' }}>•</span>
-          <span>Owned by Muhammad Nasir</span>
-          <span style={{ opacity: 0.5, margin: '0 6px' }}>•</span>
-          <span>Everyday Essentials & Direct E-Commerce Solutions</span>
-        </div>
-        <div className="top-bar-contact">
-          <div className="top-bar-item">
-            <Phone size={14} color="#93c5fd" />
-            <a href="tel:+923246105221">(+92) 324 6105221</a>
-          </div>
-          <div className="top-bar-item">
-            <Mail size={14} color="#93c5fd" />
-            <a href="mailto:info@zaroorallc.com">info@zaroorallc.com</a>
-          </div>
-          <div className="top-bar-item">
-            <a 
-              href="https://wa.me/+923246105221" 
-              target="_blank" 
-              rel="noreferrer"
-              style={{ color: '#4ade80', fontWeight: '600' }}
-            >
-              WhatsApp (+92)
-            </a>
-          </div>
-        </div>
-      </div>
 
       {/* 2. MAIN HEADER NAVIGATION WITH OFFICIAL LOGO */}
       <header className="main-nav">

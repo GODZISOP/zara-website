@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
   --primary-navy: #102a3a;
@@ -30,7 +30,7 @@ body {
 }
 
 /* TOP ANNOUNCEMENT BAR */
-.top-bar {
+.top-bar { display: none !important;
   background: #0b1f2c;
   color: #cbd5e1;
   font-size: 0.85rem;
@@ -1278,7 +1278,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .top-bar {
+  .top-bar { display: none !important;
     justify-content: center;
     text-align: center;
   }
@@ -2695,7 +2695,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .top-bar {
+  .top-bar { display: none !important;
     padding: 6px 14px;
     font-size: 0.78rem;
     justify-content: center;
